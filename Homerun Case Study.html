@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homerun Strategy — Vivaswan</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNGNkYxRTkiLz4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjg0QzE4IiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDwhLS0gTGVmdCBWIC0tPgogIDxwb2x5bGluZSBwb2ludHM9IjksMTYgMTgsNDQgMjcsMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0I4NEMxOCIgc3Ryb2tlLXdpZHRoPSI0LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gUmlnaHQgViAtLT4KICA8cG9seWxpbmUgcG9pbnRzPSIyOCwxNiAzNyw0NCA0NiwxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUExNzMwIiBzdHJva2Utd2lkdGg9IjQuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBTbWFsbCBhY2NlbnQgZG90IC0tPgogIDxjaXJjbGUgY3g9IjU1IiBjeT0iNDciIHI9IjQiIGZpbGw9IiNCODRDMTgiLz4KPC9zdmc+"/>
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNGNkYxRTkiLz4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjg0QzE4IiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDwhLS0gTGVmdCBWIC0tPgogIDxwb2x5bGluZSBwb2ludHM9IjksMTYgMTgsNDQgMjcsMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0I4NEMxOCIgc3Ryb2tlLXdpZHRoPSI0LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gUmlnaHQgViAtLT4KICA8cG9seWxpbmUgcG9pbnRzPSIyOCwxNiAzNyw0NCA0NiwxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUExNzMwIiBzdHJva2Utd2lkdGg9IjQuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBTbWFsbCBhY2NlbnQgZG90IC0tPgogIDxjaXJjbGUgY3g9IjU1IiBjeT0iNDciIHI9IjQiIGZpbGw9IiNCODRDMTgiLz4KPC9zdmc+"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --ink-soft: #2e3140;
+    --ink-muted: #6b7280;
+    --paper: #fafaf8;
+    --cream: #f4f2ec;
+    --accent: #e05c2a;
+    --accent-soft: #fbeee8;
+    --accent-2: #1e3a5f;
+    --accent-2-soft: #e8eef6;
+    --gold: #c9972b;
+    --gold-soft: #fdf4e1;
+    --border: #e2dfd8;
+    --critical: #dc2626;
+    --critical-soft: #fef2f2;
+    --high: #d97706;
+    --high-soft: #fffbeb;
+    --medium: #0891b2;
+    --medium-soft: #f0f9ff;
+    --green: #16a34a;
+    --green-soft: #f0fdf4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  /* ── COVER ─────────────────────────────────────────── */
+  .cover {
+    background: var(--accent-2);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: rgba(224,92,42,0.15);
+  }
+  .cover-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 32px;
+  }
+  .cover-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(72px, 12vw, 140px);
+    font-weight: 900;
+    line-height: .9;
+    color: white;
+    letter-spacing: -.02em;
+  }
+  .cover-brand span {
+    color: var(--accent);
+  }
+  .cover-sub {
+    margin-top: 24px;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+  .cover-meta {
+    margin-top: 60px;
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 32px;
+  }
+  .cover-meta-item label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+  }
+  .cover-accent-bar {
+    position: absolute;
+    top: 0; left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  /* ── LAYOUT ─────────────────────────────────────────── */
+  .wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── TOC ─────────────────────────────────────────── */
+  .toc-section {
+    background: var(--cream);
+    padding: 72px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: block;
+  }
+  .toc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    transition: color .2s;
+  }
+  .toc-item:hover { color: var(--accent); }
+  .toc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+  .toc-name { font-size: 14px; font-weight: 400; }
+
+  /* ── SECTION HEADERS ─────────────────────────────────────────── */
+  .section-block {
+    padding: 80px 0 48px;
+    border-top: 1px solid var(--border);
+  }
+  .section-block:first-of-type { border-top: none; }
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 28px;
+    max-width: 700px;
+  }
+  .section-intro {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 680px;
+    line-height: 1.75;
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+
+  /* ── SUBSECTION ─────────────────────────────────────────── */
+  .subsection { margin-top: 56px; }
+  .subsection-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .subsection-title .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    background: var(--accent-2);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+    letter-spacing: .05em;
+  }
+  .h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 32px 0 14px;
+  }
+
+  /* ── BODY TEXT ─────────────────────────────────────────── */
+  p { margin-bottom: 16px; color: var(--ink-soft); font-weight: 300; }
+  ul { list-style: none; padding: 0; }
+  ul li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--border);
+    font-weight: 300;
+  }
+  ul li:last-child { border-bottom: none; }
+  ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* ── KEY FINDINGS ─────────────────────────────────────────── */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 32px 0;
+    background: var(--border);
+  }
+  .finding-card {
+    background: white;
+    padding: 28px;
+  }
+  .finding-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .finding-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ── TABLES ─────────────────────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead th {
+    background: var(--accent-2);
+    color: white;
+    padding: 13px 16px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--cream); }
+  tbody td {
+    padding: 14px 16px;
+    color: var(--ink-soft);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  tbody td:first-child {
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* Severity badges */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .badge-critical { background: var(--critical-soft); color: var(--critical); }
+  .badge-high { background: var(--high-soft); color: var(--high); }
+  .badge-medium { background: var(--medium-soft); color: var(--medium); }
+
+  /* ── IMPROVEMENT CARDS ─────────────────────────────────────────── */
+  .improvement-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 28px 0;
+  }
+  .improvement-card-header {
+    background: var(--accent-2);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .improvement-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    min-width: 50px;
+  }
+  .improvement-header-text {}
+  .improvement-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .improvement-stage {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: .04em;
+  }
+  .improvement-body {
+    background: white;
+  }
+  .improvement-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .improvement-row:last-child { border-bottom: none; }
+  .improvement-label {
+    background: var(--cream);
+    padding: 16px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    padding-top: 18px;
+  }
+  .improvement-content {
+    padding: 16px 20px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* ── QUOTE ─────────────────────────────────────────── */
+  .pullquote {
+    border-left: 4px solid var(--accent);
+    margin: 40px 0;
+    padding: 20px 28px;
+    background: var(--accent-soft);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  .pullquote cite {
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  /* ── RICE TABLE ─────────────────────────────────────────── */
+  .rice-score {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--accent-2);
+  }
+
+  /* ── WIN MOMENTS ─────────────────────────────────────────── */
+  .win-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+  .win-card-header {
+    background: linear-gradient(135deg, var(--accent-2) 0%, #2a4a7a 100%);
+    padding: 18px 24px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .win-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: var(--accent);
+    color: white;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .win-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; }
+  .win-body { background: white; }
+  .win-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .win-row:last-child { border-bottom: none; }
+  .win-label {
+    background: var(--cream);
+    padding: 14px 18px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    border-right: 1px solid var(--border);
+  }
+  .win-content {
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* ── CONTRACTOR PAIN GRID ─────────────────────────────────────────── */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+  .pain-card {
+    background: white;
+    padding: 24px 20px;
+  }
+  .pain-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .pain-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--accent-2);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .pain-desc {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  /* ── METRICS GRID ─────────────────────────────────────────── */
+  .metrics-table table { font-size: 13.5px; }
+  .metrics-table thead th { background: var(--accent-2); }
+
+  /* ── TRADEOFF CARDS ─────────────────────────────────────────── */
+  .tradeoff-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-2);
+    border-radius: 0 6px 6px 0;
+    padding: 22px 24px;
+    margin: 20px 0;
+  }
+  .tradeoff-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .tradeoff-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; }
+
+  /* ── CRITIQUE GRID ─────────────────────────────────────────── */
+  .critique-block {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .critique-block h4 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--accent-2);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .critique-block ul li {
+    font-size: 13.5px;
+    padding: 10px 0 10px 22px;
+  }
+
+  /* ── CRITICAL BUG ─────────────────────────────────────────── */
+  .critical-bug {
+    background: var(--critical-soft);
+    border: 2px solid var(--critical);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+  .critical-bug-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .critical-bug-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--critical);
+    background: white;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid var(--critical);
+  }
+  .critical-bug-title { font-weight: 600; color: var(--critical); font-size: 15px; }
+  .critical-bug-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.65; }
+
+  /* ── MVP PHASE TABLE ─────────────────────────────────────────── */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+  .phase-card { background: white; padding: 28px; }
+  .phase-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .phase-tag-mvp { background: var(--accent); color: white; }
+  .phase-tag-2 { background: var(--accent-2); color: white; }
+  .phase-card ul li { border-bottom: none; padding: 7px 0 7px 22px; font-size: 13.5px; }
+
+  /* ── GUARDRAILS ─────────────────────────────────────────── */
+  .guardrail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .guardrail-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    padding: 20px;
+    border-radius: 0 0 6px 6px;
+  }
+  .guardrail-item h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .guardrail-item p { font-size: 13px; margin-bottom: 0; }
+
+  /* ── CLOSING QUOTE ─────────────────────────────────────────── */
+  .closing-quote {
+    background: var(--accent-2);
+    color: white;
+    padding: 60px;
+    margin: 80px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .closing-quote::before {
+    content: '"';
+    position: absolute;
+    top: -20px; left: 30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+  }
+  .closing-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.65;
+    max-width: 700px;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    letter-spacing: .06em;
+  }
+  footer span { color: var(--accent); }
+
+  /* ── SEQUENCING BOX ─────────────────────────────────────────── */
+  .seq-box {
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .seq-box strong { color: var(--ink); }
+
+  /* ── WIREFRAME SECTION ─────────────────────────────────────────── */
+  .proto-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .proto-header {
+    background: var(--accent-2);
+    color: white;
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .proto-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(255,255,255,0.15);
+    flex-shrink: 0;
+    min-width: 54px;
+  }
+  .proto-flow-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .proto-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .proto-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+    max-width: 600px;
+  }
+  .proto-video-wrap {
+    background: #0a0a0a;
+    padding: 32px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .proto-thumb-link {
+    display: block;
+    position: relative;
+    width: 720px;
+    max-width: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+  }
+  .proto-thumb-link:hover {
+    transform: scale(1.015);
+    box-shadow: 0 14px 56px rgba(0,0,0,0.65);
+  }
+  .proto-thumb-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+  .proto-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    transition: background 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(2px);
+  }
+  .proto-thumb-link:hover .proto-play-btn {
+    background: rgba(0,0,0,0.1);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  .proto-play-btn svg {
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  }
+  .proto-screens {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+  }
+  .proto-screen {
+    background: white;
+    padding: 22px 24px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .proto-screen:nth-child(2n) { border-right: none; }
+  .proto-screen:nth-last-child(-n+2) { border-bottom: none; }
+  .proto-screen-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .proto-screen-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .proto-screen-desc {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .proto-principle {
+    background: var(--accent-soft);
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .proto-principle-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 2px;
+    min-width: 110px;
+  }
+  .proto-principle-text {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .proto-principle-text strong { color: var(--ink); font-weight: 500; }
+  .proto-finale {
+    background: var(--accent-2);
+    color: white;
+    border-radius: 10px;
+    padding: 36px;
+    margin-top: 48px;
+  }
+  .proto-finale-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .proto-finale-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.3;
+  }
+  .proto-finale-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .proto-finale-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .proto-finale-card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .proto-finale-card p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.55;
+    font-weight: 300;
+    margin: 0;
+  }
+  .proto-finale-card p strong { color: white; font-weight: 500; }
+  .proto-finale-close {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+  .proto-finale-close em { color: white; font-style: normal; font-weight: 500; }
+
+  @media (max-width: 700px) {
+    .cover { padding: 60px 28px; }
+    .wrapper { padding: 0 20px; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .pain-grid { grid-template-columns: 1fr 1fr; }
+    .phase-grid { grid-template-columns: 1fr; }
+    .guardrail-grid { grid-template-columns: 1fr; }
+    .improvement-row, .win-row { grid-template-columns: 1fr; }
+    .improvement-label, .win-label { border-right: none; border-bottom: 1px solid var(--border); }
+    .toc-grid { grid-template-columns: 1fr; }
+    .cover-meta { flex-direction: column; gap: 20px; }
+    .proto-screens { grid-template-columns: 1fr; }
+    .proto-screen:nth-child(2n) { border-right: none; }
+    .proto-screen:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .proto-screen:last-child { border-bottom: none; }
+    .proto-finale-cols { grid-template-columns: 1fr; }
+    .proto-video-wrap iframe { height: 220px; }
+    .closing-quote { padding: 40px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-accent-bar"></div>
+  <div class="cover-tag">HOMERUN Strategy · Consumer &amp; Pro Experience</div>
+  <div class="cover-brand">HOME<span>RUN</span></div>
+  <div class="cover-sub">Building India's Infrastructure Commerce Layer</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>Date</label>
+      <span>April 2026</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Sections</label>
+      <span>6 · Field Immersion → Metrics → Wireframes</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Focus</label>
+      <span>Homeowner UX · Contractor Pro · Growth</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-section">
+  <div class="wrapper">
+    <span class="toc-label">Contents</span>
+    <div class="toc-title">Report at a Glance</div>
+    <div class="toc-grid">
+      <a class="toc-item" href="#about"><span class="toc-num">00</span><span class="toc-name">About the Company</span></a>
+      <a class="toc-item" href="#s1"><span class="toc-num">01</span><span class="toc-name">Field Immersion &amp; App Audit</span></a>
+      <a class="toc-item" href="#s2"><span class="toc-num">02</span><span class="toc-name">Redesigning the Homeowner Experience</span></a>
+      <a class="toc-item" href="#s3"><span class="toc-num">03</span><span class="toc-name">Homerun Pro: Contractor Experience</span></a>
+      <a class="toc-item" href="#s4"><span class="toc-num">04</span><span class="toc-name">Metrics Framework</span></a>
+      <a class="toc-item" href="#s5"><span class="toc-num">05</span><span class="toc-name">Trade-Offs, Self-Critique &amp; Next Steps</span></a>
+      <a class="toc-item" href="#s6"><span class="toc-num">06</span><span class="toc-name">UX Prototypes &amp; Wireframes</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Context</span>
+    <h2 class="section-title">About the Company</h2>
+    <p class="section-intro">The homeowner conversion problem and the contractor retention problem share one structural failure: the app is designed around products, not around the problems people are trying to solve. Homeowners do not think in SKUs and Contractors do not think in product pages. Every solution in this document begins with that observation and works backward to the product change.</p>
+
+    <div class="h3">The Three Most Important Findings</div>
+    <div class="findings-grid">
+      <div class="finding-card">
+        <span class="finding-num">Finding 01</span>
+        <div class="finding-text">Measurement anxiety kills purchase intent faster than price does</div>
+      </div>
+      <div class="finding-card">
+        <span class="finding-num">Finding 02</span>
+        <div class="finding-text">Contractor loyalty to offline suppliers is about consequence absorption, not cost</div>
+      </div>
+      <div class="finding-card">
+        <span class="finding-num">Finding 03</span>
+        <div class="finding-text">A dismissed segmentation modal is the most expensive piece of concern in the current product</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div id="s1" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Section 01</span>
+    <h2 class="section-title">Field Immersion &amp; App Audit</h2>
+
+    <!-- 1A -->
+    <div class="subsection">
+      <div class="subsection-title"><span class="tag">1A</span> Homeowner App Audit</div>
+      <p>I simulated a specific scenario: a first-time customer who needs to tile their kitchen floor (approx. 120 sq. ft), has a rough budget of ₹2,50,000, and has never bought construction materials online. This specificity matters because it is the modal homeowner — project aware but product naive.</p>
+
+      <div class="h3">Funnel Friction Map</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Primary Friction</th>
+              <th>Behavioural Root Cause</th>
+              <th>Severity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Discovery &amp; Onboarding</td>
+              <td>Category first home screen. Segmentation modal is dismissible via a single X tap.</td>
+              <td>Homeowners arrive with outcome intent ("I want a nice kitchen floor"), not product intent. A materials catalogue as a homepage is the wrong entry point.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td>Delivery Promise</td>
+              <td>"120 Mins" badge shown at all times. "Your order will get processed at 8 AM" banner visible simultaneously on the same home screen.</td>
+              <td>Trust destruction before a cart is even built. Users who discover the discrepancy mid-session have wasted 20 minutes of intent-building.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td>Search &amp; Browse</td>
+              <td>SKU-anchored search. No project-based navigation. Trade-professional category taxonomy (OPC 43, CPVC, GI Box).</td>
+              <td>Homeowners browse by room outcome, not product specification. Every homeowner I observed reformulated their search 2–3 times.</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+            </tr>
+            <tr>
+              <td>PDP &amp; Trust</td>
+              <td>Studio/packaging images only. No in-context photography. Discount badges ranging 3%–81%, which erodes pricing credibility.</td>
+              <td>Without physical verification, homeowners need social proof from "people like me." An 81% Off badge signals inflated MRP to any educated buyer.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td>Pricing Clarity</td>
+              <td>Delivery pricing is surfaced late and framed at a cart level rather than project level, making it feel like an arbitrary add-on instead of part of total spend.</td>
+              <td>Users think in project budgets (₹5K–₹30K chunks), not line-item carts. Without progressive feedback or upfront cost anchoring, they cannot confidently optimize their order.</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+            </tr>
+            <tr>
+              <td>Cart &amp; Checkout</td>
+              <td>Weight limit hard stop (1,500 Kg) greys out checkout with no "Split Order" recovery path.</td>
+              <td>A contractor ordering 35 bags of cement must manually manage two separate orders. This affects the highest-revenue segment disproportionately.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+            <tr>
+              <td>Post-Order &amp; Repeat</td>
+              <td>No project memory. No lifecycle-aware nudges. Post-purchase communication is generic.</td>
+              <td>Renovation has 4–5 purchasing chapters (floor, walls, fixtures, plumbing, paint). Without chapter-aware re-engagement, Homerun loses M1 to local hardware shops.</td>
+              <td><span class="badge badge-high">High</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="h3">3 Biggest Gaps vs. Comparators</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Platform</th><th>What They Do Well</th><th>Gap for Homerun</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Swiggy</td>
+              <td>Project-mode onboarding ("Reorder last"). Smart contextual suggestions. Real-time delivery accuracy.</td>
+              <td>Homerun has no project context. Home screen defaults to the same experience for all users regardless of renovation phase.</td>
+            </tr>
+            <tr>
+              <td>Amazon</td>
+              <td>Rich visual search + user reviews with photos. Product-in-context imagery. Recommendation engine.</td>
+              <td>Zero in-context photography. No user-submitted install photos. No cross-category "complete the project" logic.</td>
+            </tr>
+            <tr>
+              <td>Houzz / IKEA</td>
+              <td>Room-first navigation. Visual product discovery. Inspiration-to-cart flow.</td>
+              <td>Homerun forces users into a trade-professional taxonomy. No room visualiser, no project-based browse, no inspiration layer.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pullquote">
+        <p>I know what I want my kitchen to look like. I don't know what to type in the search bar.</p>
+        <cite>— First-time homeowner · Field observation</cite>
+      </div>
+    </div>
+
+    <!-- 1B -->
+    <div class="subsection">
+      <div class="subsection-title"><span class="tag">1B</span> Contractor Field Research</div>
+      <p>Field research: two tile contractors (one managing 2 active sites, one managing 4) and one plumber. I also spent time at a building materials market in Ganganagar observing contractor–shop owner dynamics during price negotiation and credit extension.</p>
+
+      <div class="h3">How Contractors Procure Today</div>
+      <ul>
+        <li>A tile contractor with 3 active sites calls or WhatsApps a known hardware shop at 7 AM with a list. The shop sometimes delivers; sometimes the contractor sends a helper to pick up. Payment is at month-end or when a client payment arrives.</li>
+        <li>The relationship with the shop owner is built over years. It provides: (1) consistent credit, (2) consequence absorption when a material is out of stock, and (3) zero-friction repeat ordering.</li>
+        <li>Multi-site complexity is managed via separate WhatsApp groups per site — a system that works only because it is personal, not because it is efficient.</li>
+      </ul>
+
+      <div class="h3">Switch Triggers vs. Never-Switch Triggers</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Would Make Them Switch</th><th>Would Make Them Never Switch</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5–8% consistently better pricing at scale<br>Instant GST-compliant digital invoices<br>Credit terms that match or beat their shop<br>Real-time stock confirmation before order<br>Multi-site order management in one session</td>
+              <td>A single stockout on a critical pour day<br>Ordering UX more complex than WhatsApp<br>Credit approval taking more than 48 hours<br>No consequence absorption for OOS items<br>Any experience that requires more steps than calling their shop</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pullquote">
+        <p>My shop owner figures out a substitute if my material is not in stock. That buffer — that is what I am paying for in the relationship, not the price.</p>
+        <cite>— Tile contractor · 4 active sites · Ganganagar</cite>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div id="s2" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Section 02</span>
+    <h2 class="section-title">Redesigning the Homeowner Experience</h2>
+
+    <!-- Insights -->
+    <div class="subsection">
+      <div class="subsection-title">Insights from Field Research</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Insight</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>01</td>
+              <td>The SKU-Project Mismatch</td>
+              <td>Homeowners do not shop for products. They shop for solutions to spatial problems. "My kitchen floor is 120 sq. ft and I want it to look premium but not cold" is the real query. Any experience starting with a product category, not a project or room, is starting in the wrong place.</td>
+            </tr>
+            <tr>
+              <td>02</td>
+              <td>Uncertainty Cost Dominates Price Sensitivity</td>
+              <td>In early-stage purchasing, homeowners are not concerned about price. They are concerned about making a mistake they cannot reverse. The perceived cost of uncertainty exceeds the cost of paying 10–15% more at a local shop.</td>
+            </tr>
+            <tr>
+              <td>03</td>
+              <td>Measurement Paralysis is a Solvable UX Problem</td>
+              <td>Every homeowner in field observation knew the room they wanted to tile but could not translate a room into an order quantity. "How many boxes do I need?" killed conversion intent in every session. This is not a customer education problem; it is a calculator-as-product problem.</td>
+            </tr>
+            <tr>
+              <td>04</td>
+              <td>The Renovation Has Chapters</td>
+              <td>No homeowner renovates their entire home at once. They move through a project in phases: floor first, then walls, then fixtures, then paint. Each phase has a 2–6-week gap. Homerun's M1 retention problem is partly explained by having no product mechanism that acknowledges this chapter structure.</td>
+            </tr>
+            <tr>
+              <td>05</td>
+              <td>The "Delivery Promise vs. Reality" Gap is a Trust Architecture Failure</td>
+              <td>The "120 Mins" badge is directly contradicted by "Your order will get processed at 8 AM on the next day" for evening orders. A user building a ₹50,000 cart at 7:30 PM expects 2-hour delivery. They hit this message after 20 minutes of effort. They do not come back.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5 Improvements -->
+    <div class="subsection">
+      <div class="subsection-title">5 High-Impact Improvements</div>
+
+      <!-- Card 01 -->
+      <div class="improvement-card">
+        <div class="improvement-card-header">
+          <div class="improvement-num">01</div>
+          <div class="improvement-header-text">
+            <div class="improvement-title">Time-Honest Delivery Promise</div>
+            <div class="improvement-stage">Stage: Discovery → Trust · Addresses Critical #1 from audit</div>
+          </div>
+        </div>
+        <div class="improvement-body">
+          <div class="improvement-row">
+            <div class="improvement-label">Customer Insight</div>
+            <div class="improvement-content">The '120 Mins' badge makes a promise that is factually wrong for all evening orders. Users discover the contradiction after building their cart — a trust-destruction event that drives session abandonment and kills return intent. This is Homerun's most acute trust failure, visible on every home screen screenshot.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">The Change</div>
+            <div class="improvement-content">The delivery badge becomes dynamic based on time of day. Before cutoff: 'Delivery by 4:30 PM.' After cutoff: 'First slot: Tomorrow 8–10 AM.' A delivery slot selector appears at the TOP of the home screen, not at checkout. For after-hours users, the cart persists overnight with a WhatsApp reminder at 7:30 AM: 'Your 8 AM delivery is confirmed. Materials are being picked.'</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Expected Impact</div>
+            <div class="improvement-content">Evening session (6–10 PM) cart completion rate is projected to increase. This fix requires only backend logic change and no new UI components. Highest confidence, lowest effort of all five improvements.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Validation Metric</div>
+            <div class="improvement-content">Evening session cart completion rate. Customer care contacts per order attributable to delivery confusion. This is the single most important quick win.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 02 -->
+      <div class="improvement-card">
+        <div class="improvement-card-header">
+          <div class="improvement-num">02</div>
+          <div class="improvement-header-text">
+            <div class="improvement-title">Project Cost Estimator on PDP</div>
+            <div class="improvement-stage">Stage: PDP → Cart → AOV · Addresses High friction at Pricing stage</div>
+          </div>
+        </div>
+        <div class="improvement-body">
+          <div class="improvement-row">
+            <div class="improvement-label">Customer Insight</div>
+            <div class="improvement-content">"Can I afford to tile my kitchen with this?" is the real conversion question. The current PDP answers '₹85 per sq. ft' — meaningless without knowing how many sq. ft are needed, what accessories cost and what delivery adds up to. Measurement paralysis kills intent before cart add.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">The Change</div>
+            <div class="improvement-content">Below product images on the tile PDP, add a 'Calculate for my project' module. User inputs room size (with a visual size guide for those without a measuring tape: 'medium kitchen ≈ 120 sq. ft'). Instantly shows: Tiles needed + 20% wastage allowance, recommended accessories (adhesive, grout) in correct quantities, delivery cost, and a total project cost. A single 'Add everything to cart — ₹13,830' CTA.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Expected Impact</div>
+            <div class="improvement-content">Higher PDP → Cart conversion. Increase AOV via accessory bundling. The ₹10,000 free delivery threshold becomes a natural pull mechanic — most project-kit orders clear it, eliminating the checkout sticker shock.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Validation Metric</div>
+            <div class="improvement-content">PDP → Cart conversion: estimator users vs non-users. Average items per cart. % of carts clearing ₹10,000 free delivery threshold. AOV delta: estimator sessions vs standard sessions.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 03 -->
+      <div class="improvement-card">
+        <div class="improvement-card-header">
+          <div class="improvement-num">03</div>
+          <div class="improvement-header-text">
+            <div class="improvement-title">Project-Mode Onboarding</div>
+            <div class="improvement-stage">Stage: Discovery → Browse → Activation</div>
+          </div>
+        </div>
+        <div class="improvement-body">
+          <div class="improvement-row">
+            <div class="improvement-label">Customer Insight</div>
+            <div class="improvement-content">Homeowners arrive at the app with an outcome ('I want a nice kitchen floor'), not a product ('600mm vitrified tile'). The current home screen — a category grid of Cement, Tiling, Plywood — is designed for someone who already knows what they need. The customer type modal exists but is dismissible with a single X tap.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">The Change</div>
+            <div class="improvement-content">On first app open, replace the category grid with a full-screen prompt: 'What are you working on?' with 6 visual tiles (Kitchen Renovation, Bathroom, Full Home, Flooring Only, Painting, Other). Each tile shows a finished room, not a product. The modal is non-skippable on first launch; power users have a 'I know what I need → Browse directly' escape path.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Expected Impact</div>
+            <div class="improvement-content">Increase in install-to-first-search conversion. Users with a saved project have higher M1 retention — this is the downstream effect that makes project-mode the highest LTV investment in the list, even though it ranks #3 on immediate conversion impact.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Validation Metric</div>
+            <div class="improvement-content">% of new users completing project setup in M0. Install → First Cart Add rate: project-mode cohort vs direct browse. M1 retention by project-mode cohort vs control. Time to first meaningful action (sub-3-minute benchmark).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 04 -->
+      <div class="improvement-card">
+        <div class="improvement-card-header">
+          <div class="improvement-num">04</div>
+          <div class="improvement-header-text">
+            <div class="improvement-title">Delivery Architecture: Slot Selection + Inside-Flat Option</div>
+            <div class="improvement-stage">Stage: Checkout → Delivery → NPS</div>
+          </div>
+        </div>
+        <div class="improvement-body">
+          <div class="improvement-row">
+            <div class="improvement-label">Customer Insight</div>
+            <div class="improvement-content">Construction materials are not like grocery orders. A homeowner ordering 150 tiles needs someone home, may need a helper to carry them upstairs, and needs their contractor scheduled to start the next day. Vague delivery windows make all of this impossible to plan.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">The Change</div>
+            <div class="improvement-content">At checkout, show a delivery window selector: 9–11 AM, 11 AM–1 PM, 2–4 PM, 4–6 PM. For heavy orders (&gt;100 Kg), surface 'Inside flat delivery: 2 helpers, ₹149' proactively on the PDP. Order confirmation via WhatsApp (not only app push) with exact window and live tracking link. If any item ships separately, notify proactively before delivery, not after.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Expected Impact</div>
+            <div class="improvement-content">Decrease in post-order customer care contacts. Increased post-first-order NPS. The delivery experience is the last thing a homeowner remembers before deciding whether to return.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Validation Metric</div>
+            <div class="improvement-content">Customer care contacts per order (decline). Delivery NPS (post-delivery survey). Same-delivery cancellation rate. M1 retention: delivery-slot-selected cohort vs unscheduled cohort.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 05 -->
+      <div class="improvement-card">
+        <div class="improvement-card-header">
+          <div class="improvement-num">05</div>
+          <div class="improvement-header-text">
+            <div class="improvement-title">Renovation Milestone Nudge Engine</div>
+            <div class="improvement-stage">Stage: Post-Purchase → O1 → O2 Repeat</div>
+          </div>
+        </div>
+        <div class="improvement-body">
+          <div class="improvement-row">
+            <div class="improvement-label">Customer Insight</div>
+            <div class="improvement-content">After buying kitchen floor tiles, the homeowner does not open Homerun again for 3 weeks while the contractor installs. By the time they are ready for Chapter 2 (wall tiles), they have defaulted to a local hardware shop. Homerun's M1 retention problem is a timing problem, not a product problem.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">The Change</div>
+            <div class="improvement-content">After a floor-tile order, start a 14-day timer (average installation duration). At Day 14, send a WhatsApp message: 'Most kitchens take 1–2 weeks to install new flooring. If your floor is done, here's what homeowners who ordered this tile bought next.' In-app, a persistent renovation tracker shows progress: Kitchen Floor ✓ → Walls (Next) → Fixtures → Paint.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Expected Impact</div>
+            <div class="improvement-content">Increased M1 retention. Increased orders-per-project. A homeowner retained through a full kitchen renovation generates 4–5 orders over 10–12 weeks — worth ₹28,000–₹35,000 in incremental GMV at ₹7,000 AOV per order.</div>
+          </div>
+          <div class="improvement-row">
+            <div class="improvement-label">Validation Metric</div>
+            <div class="improvement-content">M1 retention rate: 30-day repeat purchase. Orders per project lifecycle. Nudge open rate and conversion rate by message type. Time between O1 and O2 (shorter = better lifecycle capture).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RICE -->
+    <div class="subsection">
+      <div class="subsection-title">Prioritisation: RICE Framework</div>
+      <p>RICE scoring (Reach × Impact × Confidence ÷ Effort) allows me to weigh improvements systematically while being explicit about assumptions. Scores are directional here.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Improvement</th><th>Reach</th><th>Impact</th><th>Confidence</th><th>Effort (wks.)</th><th>RICE Score</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Delivery Promise Fix (Time-Honest Badge)</td>
+              <td>10/10</td><td>3</td><td>90%</td><td>2</td>
+              <td><span class="rice-score">135.0</span></td>
+            </tr>
+            <tr>
+              <td>Project Cost Estimator (PDP)</td>
+              <td>8/10</td><td>3</td><td>85%</td><td>4</td>
+              <td><span class="rice-score">51.0</span></td>
+            </tr>
+            <tr>
+              <td>Renovation Milestone Engine</td>
+              <td>7/10</td><td>3</td><td>75%</td><td>6</td>
+              <td><span class="rice-score">26.3</span></td>
+            </tr>
+            <tr>
+              <td>Project-Mode Onboarding</td>
+              <td>10/10</td><td>2</td><td>70%</td><td>6</td>
+              <td><span class="rice-score">23.3</span></td>
+            </tr>
+            <tr>
+              <td>Delivery Slot + Inside-Flat Option</td>
+              <td>9/10</td><td>2</td><td>90%</td><td>5</td>
+              <td><span class="rice-score">32.4</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="seq-box">
+        <strong>Sequencing logic:</strong> Ship #1 first (2-week backend change, fixes the single most acute trust failure). Then #2 (high confidence, medium effort, direct conversion impact). Follow with #5 (completes delivery reliability before expanding). Build #3 after first-order data provides calibration for nudge timing. Ship #4 (onboarding) once the estimator proves that project-mode thinking converts — onboarding changes carry the highest implementation risk.
+      </div>
+    </div>
+
+    <!-- OPD Summary -->
+    <div class="subsection">
+      <div class="subsection-title">OPD &amp; M1 Retention Impact Summary</div>
+      <p>Taken together, the five improvements address the complete homeowner funnel from session start to repeat purchase. The delivery promise fix prevents trust destruction before any product is seen. The PDP estimator converts browsing intent into completed carts. The delivery slot feature converts post-purchase anxiety into NPS. The milestone engine is the only mechanism that turns a single transaction into a project-long relationship.</p>
+      <p>A homeowner retained through a full kitchen renovation generates 4–5 orders over 10–12 weeks. At ₹7,000 AOV per order and higher for bundled project kits, each retained homeowner represents <strong>₹28,000–₹35,000 in incremental GMV</strong> that currently goes to local hardware shops. Win M1, and every subsequent renovation phase becomes a near-zero-CAC acquisition.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div id="s3" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Section 03</span>
+    <h2 class="section-title">Homerun Pro: Contractor Experience</h2>
+
+    <p class="section-intro">A tile contractor with 3 active sites calls or WhatsApps a known hardware shop at 7 AM with a materials list. The shop delivers by 9 AM. Payment is at month-end. The relationship is personal, built over years, and provides credit, consequence absorption and zero-friction repeat ordering. <strong>Homerun must match all three dimensions — not just price and speed.</strong></p>
+
+    <!-- Pain grid -->
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">⏰</div>
+        <span class="pain-label">Time</span>
+        <div class="pain-desc">Procurement squeezed into 6–8 AM. Idle labour = ₹800–1,500/day lost.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <span class="pain-label">Cash Flow</span>
+        <div class="pain-desc">Client payments trail material purchase by 15–45 days. Credit is not optional.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⚠️</div>
+        <span class="pain-label">Risk</span>
+        <div class="pain-desc">A stockout on a pour day means idle labour that still must be paid.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">📱</div>
+        <span class="pain-label">Complexity</span>
+        <div class="pain-desc">2–4 sites tracked simultaneously via WhatsApp groups per site.</div>
+      </div>
+    </div>
+
+    <!-- Critical Bug -->
+    <div class="critical-bug">
+      <div class="critical-bug-header">
+        <span class="critical-bug-label">⚡ Critical Bug</span>
+        <div class="critical-bug-title">Must Fix Before Pro Launch</div>
+      </div>
+      <div class="critical-bug-body">
+        <strong>Weight Limit Hard Stop: No Recovery Path.</strong> Current state: 'Cart exceeds weight limit per order. Maximum 1,500 Kgs. Place another Order if needed.' Checkout button greyed out. A contractor ordering 35 bags of cement (1,750 Kg) must manually figure out which items to move, place a second order and manage two delivery windows.<br><br>
+        <strong>Required fix:</strong> Auto-split order into 2 deliveries when cart exceeds 1,500 Kg. Show each delivery slot separately. One payment for both. This converts a dead-end error into a Pro differentiator.
+      </div>
+    </div>
+
+    <!-- Journey -->
+    <div class="subsection">
+      <div class="subsection-title">End-to-End Homerun Pro Journey</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Journey Stage</th><th>What We Build</th><th>Offline Pain We Replace</th><th>Success Signal</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sign-Up &amp; Verification</td>
+              <td>Mobile OTP + GST auto-verify (GSTN API). Trade pricing unlocked immediately. Credit underwriting begins silently in background.</td>
+              <td>No Pro account exists. Contractors use the same consumer flow as homeowners.</td>
+              <td>Time from sign-up to first Pro order &lt; 5 minutes. Pro account activation rate increases within 7 days.</td>
+            </tr>
+            <tr>
+              <td>First Bulk Order</td>
+              <td>Pro home screen is an ordering interface, not a catalogue. Trade-name search ('OPC 43 cement' not product codes). Target: first order placed in under 5 minutes.</td>
+              <td>Search requires SKU-level knowledge. No saved lists. No quick reorder.</td>
+              <td>First order within 48 hours of sign-up. Cart completion rate (first session) increase.</td>
+            </tr>
+            <tr>
+              <td>Multi-Site Cart</td>
+              <td>Site tabs at top of ordering screen. Each tab is a separate cart with its own delivery address and billing code. One payment for all sites; separate GST invoices per site.</td>
+              <td>Same delivery address for all. Contractor manages multiple WhatsApp groups to track orders for different sites.</td>
+              <td>% of Pro users with 2+ active sites (Increase). Multi-site order adoption within first 30 days.</td>
+            </tr>
+            <tr>
+              <td>Trade Pricing</td>
+              <td>3-tier pricing visible on every SKU: Base / Pro / Volume. Active nudge in cart: 'Add 12 more bags to unlock ₹378/bag, saves ₹348.' No negotiation required.</td>
+              <td>'Unlock Bulk Price' is a text link, user must click through to a popup to see thresholds. 81% Off badges erode pricing credibility for professionals.</td>
+              <td>Bulk tier adoption rate. Average order volume per session. Savings-per-order visibility rating.</td>
+            </tr>
+            <tr>
+              <td>Embedded Credit</td>
+              <td>Pre-approved credit facility surfaced at checkout. 'Pay in 30 days, ₹0 extra. Your Pro credit limit: ₹45,000. Available: ₹38,500.' WhatsApp reminder 5 days before due date.</td>
+              <td>No credit option visible in app. Contractors rely on informal shop-owner credit — personal, unstated and revocable at any time.</td>
+              <td>Credit adoption rate per order. Credit default rate (guardrail). Credit limit utilisation.</td>
+            </tr>
+            <tr>
+              <td>One-Tap Reorder</td>
+              <td>'Reorder Last' button after first order. Saved Lists: contractor creates 'Bathroom Project Standard' with SKUs and quantities, reorders the full list in two taps.</td>
+              <td>WhatsApp ordering has significant error rates — wrong SKU, wrong quantity, wrong site. No order record without scrolling through chat history.</td>
+              <td>% of repeat orders via Reorder Last or Saved List. Time to complete repeat order (target: &lt;1 min).</td>
+            </tr>
+            <tr>
+              <td>Pro Dashboard</td>
+              <td>Spend by site (this month vs last month). Top 10 materials by spend. All GST-compliant invoices downloadable as PDFs. 'Download all invoices (Q4 for CA)' — one tap generates a zip file.</td>
+              <td>Hardware shop bills are handwritten, frequently missing GSTIN or with incorrect HSN codes. Contractors spend 2–3 days at quarter-end chasing corrected bills.</td>
+              <td>Invoice download rate. Quarter-end customer care contacts (should drop to near zero). Contractor NPS uplift.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Win Moments -->
+    <div class="subsection">
+      <div class="subsection-title">5 Critical Win Moments vs. the Hardware Supplier</div>
+
+      <div class="win-card">
+        <div class="win-card-header"><div class="win-num">1</div><div class="win-title">Transparent Trade Pricing vs. Negotiation Theatre</div></div>
+        <div class="win-body">
+          <div class="win-row"><div class="win-label">Offline Reality</div><div class="win-content">Contractor calls shop owner, gets a verbal price that may or may not be their real price. Negotiation is a social ritual — takes time, requires relationship investment, and the contractor never knows if they got the best deal.</div></div>
+          <div class="win-row"><div class="win-label">What's Broken</div><div class="win-content">Information asymmetry benefits the supplier. The contractor cannot compare prices across suppliers without multiple calls. Uncertainty in every transaction creates low-level anxiety.</div></div>
+          <div class="win-row"><div class="win-label">Homerun Pro Solution</div><div class="win-content">Transparent 3-tier pricing visible immediately on every SKU. Volume thresholds shown proactively. No negotiation required — the trade price is the trade price. The psychological value of 'I know I got the right price' is nearly as important as the price itself.</div></div>
+          <div class="win-row"><div class="win-label">Switching Incentive</div><div class="win-content">Predictability is the product. Once contractors trust that Homerun's price is consistently competitive, the cognitive overhead of shopping drops to near zero.</div></div>
+        </div>
+      </div>
+
+      <div class="win-card">
+        <div class="win-card-header"><div class="win-num">2</div><div class="win-title">One-Tap Reorder vs. WhatsApp Back-and-Forth</div></div>
+        <div class="win-body">
+          <div class="win-row"><div class="win-label">Offline Reality</div><div class="win-content">Contractor sends a WhatsApp message: 'Bhai, 10 bags OPC, 5 bags sand, 3 cartons tile (30×60 ivory gloss). Koramangala site. Kal subah 8 baje.' Shop owner sometimes misreads it. Materials sometimes arrive wrong.</div></div>
+          <div class="win-row"><div class="win-label">What's Broken</div><div class="win-content">Error rate in manual WhatsApp orders is significant. Wrong SKU, wrong quantity, wrong site cause project delays. No record of what was ordered without scrolling through chat history.</div></div>
+          <div class="win-row"><div class="win-label">Homerun Pro Solution</div><div class="win-content">Saved Lists + Reorder Last + confirmed order record. A contractor's daily order that takes 30 minutes of WhatsApp back-and-forth is replaced by a 45-second app interaction.</div></div>
+          <div class="win-row"><div class="win-label">Switching Incentive</div><div class="win-content">Time saved alone is compelling. But the deeper incentive is error elimination — a wrong material delivered to a site delays the entire project, which costs far more than any price difference.</div></div>
+        </div>
+      </div>
+
+      <div class="win-card">
+        <div class="win-card-header"><div class="win-num">3</div><div class="win-title">GST-Compliant Digital Invoices vs. Handwritten Bills</div></div>
+        <div class="win-body">
+          <div class="win-row"><div class="win-label">Offline Reality</div><div class="win-content">Hardware shop bills are frequently handwritten, often missing GSTIN or with incorrect HSN codes. At quarter-end, contractors spend 2–3 days chasing corrected bills so their accountant can file GST returns.</div></div>
+          <div class="win-row"><div class="win-label">What's Broken</div><div class="win-content">A contractor with ₹3 lakh/month in material purchases and correct GST documentation is leaving ₹54,000/month (18% input tax credit) on the table purely due to documentation failure.</div></div>
+          <div class="win-row"><div class="win-label">Homerun Pro Solution</div><div class="win-content">Every Homerun Pro order auto-generates a GST-compliant invoice with correct GSTIN, HSN code, and tax breakdown. 'Download Q4 invoices for CA' in one tap. This is not a feature; it is financial infrastructure.</div></div>
+          <div class="win-row"><div class="win-label">Switching Incentive</div><div class="win-content">The tax saving alone is ₹54,000/month for a ₹3L/month buyer — which exceeds any delivery premium Homerun charges. This is the single most quantifiable switching incentive in the Pro proposition.</div></div>
+        </div>
+      </div>
+
+      <div class="win-card">
+        <div class="win-card-header"><div class="win-num">4</div><div class="win-title">Verified Stock Confirmation vs. 'Hoga Ya Nahi?'</div></div>
+        <div class="win-body">
+          <div class="win-row"><div class="win-label">Offline Reality</div><div class="win-content">Contractors ask 'Will it be available?' every time they order large quantities. Shop owners often confirm availability without checking, leading to partial deliveries at 8 AM when a concrete pour is scheduled for 9 AM.</div></div>
+          <div class="win-row"><div class="win-label">What's Broken</div><div class="win-content">A partial delivery on a pour day means rescheduling an entire concrete pour — 8–12 workers paid ₹800–1,200/day who do nothing. One missed pour = ₹7,000–₹15,000 in wasted labour.</div></div>
+          <div class="win-row"><div class="win-label">Homerun Pro Solution</div><div class="win-content">For orders above 20 units of any SKU: 'Confirmed 200 bags in stock at HSR warehouse. Delivery tomorrow 8–10 AM.' If stock is insufficient, immediately surface alternatives with spec comparison.</div></div>
+          <div class="win-row"><div class="win-label">Switching Incentive</div><div class="win-content">Removing pour-day uncertainty is worth a significant premium to any contractor who has experienced it. Once they experience reliable stock confirmation, the informal verbal confirmation from a shop owner feels like an unnecessary gamble.</div></div>
+        </div>
+      </div>
+
+      <div class="win-card">
+        <div class="win-card-header"><div class="win-num">5</div><div class="win-title">Pre-Approved Credit vs. Relationship-Dependent Lending</div></div>
+        <div class="win-body">
+          <div class="win-row"><div class="win-label">Offline Reality</div><div class="win-content">Getting credit from a hardware shop requires a personal relationship. The credit limit is unstated, renegotiated implicitly and can be withdrawn at any time. The contractor is in a power-inferior position.</div></div>
+          <div class="win-row"><div class="win-label">What's Broken</div><div class="win-content">Informal credit is reliable until it is not. During peak demand (pre-festive surge, post-monsoon resumption), shop owners restrict credit to preferred customers.</div></div>
+          <div class="win-row"><div class="win-label">Homerun Pro Solution</div><div class="win-content">Pre-approved, transparent credit facility with a stated limit, clear repayment terms and no interpersonal power dynamic. Contractor knows exactly how much credit they have, when it is due and how to increase it.</div></div>
+          <div class="win-row"><div class="win-label">Switching Incentive</div><div class="win-content">This shifts the credit relationship from dependency to predictable business tool. The contractor does not need to manage a personal relationship to access working capital.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MVP / Phase 2 -->
+    <div class="subsection">
+      <div class="subsection-title">MVP vs. Phase 2 Build Sequencing</div>
+      <div class="phase-grid">
+        <div class="phase-card">
+          <span class="phase-tag phase-tag-mvp">MVP · Unlock First Order</span>
+          <ul>
+            <li>Pro account creation: mobile OTP + GST auto-verify</li>
+            <li>Trade pricing unlocked immediately</li>
+            <li>Auto-split order for weight limit (converts checkout blocker into Pro differentiator)</li>
+            <li>Multi-site ordering: up to 3 sites per session, separate carts, separate invoices, one payment</li>
+            <li>Trade-name search: autocomplete using contractor terminology</li>
+            <li>Saved Lists: create and reorder named material templates with pre-set quantities</li>
+            <li>GST-compliant invoice auto-generation: downloadable from dashboard per order</li>
+            <li>Volume tier nudges in cart: 'Add X more to unlock ₹Y/bag'</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <span class="phase-tag phase-tag-2">Phase 2 · Retention &amp; Scale</span>
+          <ul>
+            <li>Full Pro dashboard: spend analytics by site, month-on-month trends, credit utilisation</li>
+            <li>Predictive reorder: 'You typically order cement every 4 days. It has been 6 days — running low?'</li>
+            <li>Full credit underwriting: ML-based scoring using GST returns and order history</li>
+            <li>Material substitution engine: if ordered item is OOS, suggest closest alternative with spec comparison</li>
+            <li>Dedicated account manager: contractors ordering ₹1.5L+/month get a named RM via WhatsApp</li>
+            <li>Real-time inventory visibility: large order confirmation with warehouse stock query</li>
+            <li>Installer/subcontractor network: contractors invite labour subs with approval limits</li>
+          </ul>
+        </div>
+      </div>
+      <div class="seq-box">
+        <strong>Sequencing logic:</strong> The MVP answers one question — 'Why should I order from Homerun instead of calling my hardware shop?' — with price transparency, speed, GST invoices, multi-site capability, and the auto-split that removes the current launch blocker. Phase 2 is built once order data exists to personalise (predictive reorder), repayment history exists to expand credit responsibly and GMV per contractor justifies dedicated account management.<br><br>
+        <strong>Riskiest MVP assumption:</strong> GST auto-verification via GSTN API is reliable for the smaller contractor segment where GST registration may be informal or incomplete.<br>
+        <strong>Test:</strong> Running 50 manual verifications in Week 1 alongside the API to calibrate failure rate and design the fallback flow before launch.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div id="s4" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Section 04</span>
+    <h2 class="section-title">Metrics Framework</h2>
+
+    <div class="subsection">
+      <div class="subsection-title">Homeowner Metrics (B2C)</div>
+      <div class="table-wrap metrics-table">
+        <table>
+          <thead><tr><th>Metric</th><th>Why It Matters</th></tr></thead>
+          <tbody>
+            <tr><td>Install → First Order Conversion</td><td>Measures M0 effectiveness. Project-mode onboarding and PDP estimator are primary levers. Currently significantly below potential.</td></tr>
+            <tr><td>Evening Session Cart Completion (6–10 PM)</td><td>Directly measures impact of time-honest delivery promise. This cohort is currently facing problems due to the promise-reality gap.</td></tr>
+            <tr><td>PDP → Cart Conversion (Estimator Users)</td><td>Primary metric for cost estimator improvement. Should be significantly higher than the non-estimator rate, confirming that project-cost transparency drives add-to-cart decisions.</td></tr>
+            <tr><td>M1 Retention Rate (30-day)</td><td>Single most important homeowner metric. Renovation lifecycle capture depends entirely on winning M1. The milestone nudge engine is the primary lever.</td></tr>
+            <tr><td>Orders per Project</td><td>New metric Homerun should track. A kitchen renovation should yield 3–5 orders over 10–12 weeks. Currently invisible — its absence explains why the M1 problem looks unsolvable.</td></tr>
+            <tr><td>Average Order Value (with accessories)</td><td>The bundled checkout mechanic directly impacts this. Measures whether 'project thinking' translates into fuller carts at a unit-economic level.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Homerun Pro Metrics (B2B)</div>
+      <div class="table-wrap metrics-table">
+        <table>
+          <thead><tr><th>Metric</th><th>Why It Matters</th></tr></thead>
+          <tbody>
+            <tr><td>First Order Activation Rate</td><td>% of Pro signups who place a bulk order within 7 days. Critical M0 metric for contractor acquisition. Low rate = onboarding is broken or value is unclear.</td></tr>
+            <tr><td>Order Completion Rate (weight-limit carts)</td><td>Directly measures the auto-split fix. Current rate is 0% for carts over 1,500 Kg. This is a revenue-recovery metric.</td></tr>
+            <tr><td>Weekly Order Frequency (Active Contractors)</td><td>Contractors with 2+ active sites should be ordering 3–4× per week. This is the usage intensity signal that separates primary suppliers from occasional ones.</td></tr>
+            <tr><td>Monthly GMV per Active Contractor</td><td>Core unit economic for Pro segment. At 50% of order volume, contractor GMV health directly drives Homerun's overall growth trajectory.</td></tr>
+            <tr><td>Multi-Site Usage Rate</td><td>% of Pro users with 2+ active sites in app. High multi-site usage = embedded in contractor workflow = high switching cost. This is the stickiness metric.</td></tr>
+            <tr><td>Credit Adoption Rate</td><td>% of Pro orders using in-app credit. High adoption = stickiness (credit creates switching cost). Low adoption = trust or awareness problem in the credit UX.</td></tr>
+            <tr><td>M3 Retention (Pro vs. Homeowner)</td><td>Homerun's stated 3× contractor M3 retention advantage must be maintained and widened as the Pro product matures.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Guardrail Metrics</div>
+      <p>Metrics we must not break while optimising for growth:</p>
+      <div class="guardrail-grid">
+        <div class="guardrail-item">
+          <h4>Homeowner Return Rate</h4>
+          <p>High returns signal trust failure or measurement confusion; the estimator works only if its calculations are accurate.</p>
+        </div>
+        <div class="guardrail-item">
+          <h4>Contractor Credit Default Rate</h4>
+          <p>The underwriting model needs tightening before credit line expansion.</p>
+        </div>
+        <div class="guardrail-item">
+          <h4>Delivery Success Rate</h4>
+          <p>Stockout or wrong-delivery events are trust-destruction events, especially for contractors scheduling labour.</p>
+        </div>
+        <div class="guardrail-item">
+          <h4>Customer Care Contacts per Order</h4>
+          <p>High contact rate signals communication gaps in delivery experience — masks a systemic problem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div id="s5" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Section 05</span>
+    <h2 class="section-title">Trade-Offs, Self-Critique &amp; What I'd Do Differently</h2>
+
+    <div class="subsection">
+      <div class="subsection-title">Explicit Trade-offs Made</div>
+
+      <div class="tradeoff-card">
+        <div class="tradeoff-title">Trade-off 1: Delivery promise fix shipped before project-mode onboarding</div>
+        <div class="tradeoff-body">Project-mode onboarding is a larger surface change that carries implementation risk. The delivery promise fix is a 2-week backend logic change. Shipping in this order means the most acute trust failure is addressed immediately, while the larger UX restructure is validated against real conversion data before committing to it. The downside: homeowners who install during the 4–6-week gap still experience the category-first home screen.</div>
+      </div>
+
+      <div class="tradeoff-card">
+        <div class="tradeoff-title">Trade-off 2: Milestone engine ships before visual inspiration layer</div>
+        <div class="tradeoff-body">A room-visualiser and AR preview would address the trust gap at the PDP stage. I ranked the milestone engine higher because retention compounds — each homeowner retained through a full renovation is worth 5–8× a single-order homeowner. The inspiration layer is a better user experience but delivers returns on a longer timeline and requires more operational investment (content curation, photo moderation).</div>
+      </div>
+
+      <div class="tradeoff-card">
+        <div class="tradeoff-title">Trade-off 3: Pro credit shipped as rule-based pre-approval, not full ML underwriting</div>
+        <div class="tradeoff-body">Full ML-based credit scoring using GST returns and order history requires data Homerun does not yet have in volume. The rule-based pre-approval (GST turnover above threshold → ₹15,000 starter credit) ships in MVP and provides the contractor experience without the underwriting risk. The downside: it excludes smaller contractors with informal income not captured in GST. This is a deliberate decision to protect the credit default rate guardrail while we build order history.</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Self-Critique</div>
+      <div class="critique-block">
+        <h4>On the Homeowner Side</h4>
+        <ul>
+          <li><strong>The project-mode onboarding might add friction for the returning user.</strong> Someone who already knows they need OPC cement should have a clean 'Browse directly' escape that does not punish them. I under-specified this in the UX flow — it needs explicit design.</li>
+          <li><strong>The cost estimator assumes users can provide a room dimension.</strong> Many will not have a measuring tape or dimensions in the initial stage. The UX needs a standard-size picker ('small / medium / large kitchen') as a fallback, and ideally a photo-based estimation tool. Without this, the estimator is useful only for the 40% of homeowners who measured before opening the app.</li>
+          <li><strong>The milestone nudge engine could feel intrusive if timing is wrong.</strong> A nudge sent when the homeowner is still waiting for waterproofing to dry is irritating, not helpful. This requires real order-timing data to calibrate — it needs a pilot cohort before broad rollout, not a day-one launch.</li>
+        </ul>
+      </div>
+      <div class="critique-block">
+        <h4>On the Homerun Pro Side</h4>
+        <ul>
+          <li><strong>The credit facility is the highest-value and highest-risk feature.</strong> GST API access is not always clean; smaller contractors have informal income not captured in GST. A bad credit call at scale creates NPA exposure. The underwriting model needs dedicated risk team input before expanding beyond the rule-based starter limit. Partnering with NBFCs would be a better call.</li>
+          <li><strong>The material substitution engine in Phase 2 is technically complex and operationally risky.</strong> Suggesting a wrong substitute for a structural application (incorrect cement grade for a load-bearing pour) could cause real harm. Implementation must be conservative: automated for accessories, manual review for structural materials.</li>
+          <li><strong>The sales motion for contractor acquisition is under-addressed.</strong> The Pro sign-up flow assumes a contractor who has already decided to try Homerun. The bigger challenge is reaching that moment of intent. Field sales + WhatsApp broadcast campaigns in target markets are a prerequisite to the Pro launch — the best product experience cannot compensate for weak go-to-market.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">What I'd Do Differently with Access to Homerun's Internal Data</div>
+      <p>My recommendations are grounded in behavioural observation, app analysis and competitive research — but not in Homerun's actual funnel data. Before finalising any prioritisation, I would need:</p>
+      <ul>
+        <li>The actual conversion rate at each funnel stage (install → first cart add → checkout → payment), to confirm whether my severity rankings match quantitative reality.</li>
+        <li>The percentage of orders placed in evening slots that currently abandon, to size the revenue opportunity of the delivery promise fix.</li>
+        <li>The distribution of cart sizes — specifically what percentage of Pro orders currently exceed the weight limit — to quantify the weight-split fix's GMV impact.</li>
+        <li>M1 retention rate by acquisition channel (organic, paid, referral), to understand whether the milestone engine is solving a discovery problem or a product-value problem.</li>
+        <li>Contractor order frequency and repeat patterns, to calibrate the predictive reorder timing in Phase 2.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div id="s6" class="wrapper">
+  <div class="section-block">
+    <span class="section-eyebrow">Section 06</span>
+    <h2 class="section-title">UX Prototypes &amp; Wireframes</h2>
+    <p class="section-intro">Two interlinked systems that together shift Homerun from a catalog-led marketplace to a problem-solving layer — where offline suppliers currently dominate.</p>
+
+    <!-- FLOW 1 -->
+    <div class="subsection">
+      <div class="proto-block">
+        <div class="proto-header">
+          <div class="proto-num">01</div>
+          <div class="proto-header-text">
+            <span class="proto-flow-tag">Flow 1 · Project Checkout Engine</span>
+            <div class="proto-title">From “I want to renovate” → Checkout in 4 taps | Project-Based Commerce UX</div>
+            <div class="proto-subtitle">A project-first entry point that collapses search, quantity estimation, accessory discovery, and cost calculation into a single guided decision.</div>
+          </div>
+        </div>
+        <div class="proto-video-wrap">
+          <a href="https://www.youtube.com/watch?v=uLunBH38xKA" target="_blank" rel="noopener noreferrer" class="proto-thumb-link">
+            <img src="https://img.youtube.com/vi/uLunBH38xKA/maxresdefault.jpg" alt="Flow 1: From I want to renovate to checkout in 4 taps" class="proto-thumb-img">
+            <div class="proto-play-btn">
+              <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#FF0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+            </div>
+          </a>
+        </div>
+        <div class="proto-screens">
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 1</span>
+            <div class="proto-screen-name">Project entry</div>
+            <div class="proto-screen-desc">Kitchen · Bathroom · Flooring — no SKUs, no categories. Users arrive with outcome intent, not product intent.</div>
+          </div>
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 2</span>
+            <div class="proto-screen-name">Scope selection</div>
+            <div class="proto-screen-desc">Small / Medium / Large with contextual guidance ("Most Indian kitchens are 100–150 sq ft"). Replaces measurement anxiety with confidence.</div>
+          </div>
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 3 — Core moment</span>
+            <div class="proto-screen-name">Auto-generated kit</div>
+            <div class="proto-screen-desc">System generates tiles, adhesive, grout, and wastage buffer — with total cost. Four decisions collapsed into one.</div>
+          </div>
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 4</span>
+            <div class="proto-screen-name">Customize &amp; checkout</div>
+            <div class="proto-screen-desc">Edit quantities, swap products, real-time price updates. Flexibility without breaking the system.</div>
+          </div>
+        </div>
+        <div class="proto-principle">
+          <span class="proto-principle-label">Design principle</span>
+          <div class="proto-principle-text">Users don't come here to buy tiles — they come to solve a space problem. This flow eliminates <strong>search, quantity estimation, accessory discovery,</strong> and <strong>cost calculation</strong> and replaces them with a single guided decision. <strong>Control is optional — confidence is default.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW 2 -->
+    <div class="subsection">
+      <div class="proto-block">
+        <div class="proto-header">
+          <div class="proto-num">02</div>
+          <div class="proto-header-text">
+            <span class="proto-flow-tag">Flow 2 · Renovation OS</span>
+            <div class="proto-title">From Single Order → Full Renovation Journey | Lifecycle UX for Homeowners</div>
+            <div class="proto-subtitle">The retention layer — turns a transaction into a timeline and drives repeat orders through smart, time-aware re-engagement.</div>
+          </div>
+        </div>
+        <div class="proto-video-wrap">
+          <a href="https://www.youtube.com/watch?v=NaTzDfi7O1w" target="_blank" rel="noopener noreferrer" class="proto-thumb-link">
+            <img src="https://img.youtube.com/vi/NaTzDfi7O1w/maxresdefault.jpg" alt="Flow 2: Single order to Multi-phase project" class="proto-thumb-img">
+            <div class="proto-play-btn">
+              <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#FF0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+            </div>
+          </a>
+        </div>
+        <div class="proto-screens">
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 1</span>
+            <div class="proto-screen-name">Post-order transformation</div>
+            <div class="proto-screen-desc">First purchase auto-creates a "Kitchen Renovation" project. Flooring marked complete. We are turning a transaction into a timeline.</div>
+          </div>
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 2</span>
+            <div class="proto-screen-name">Project dashboard</div>
+            <div class="proto-screen-desc">Floor ✓ · Walls → Next · Fixtures · Paint. Gives users the mental model of what comes next — something offline shops do intuitively.</div>
+          </div>
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 3</span>
+            <div class="proto-screen-name">Smart re-engagement</div>
+            <div class="proto-screen-desc">Time + behaviour triggered modal: "Your flooring should be done by now." Timing is the real retention lever, not notifications.</div>
+          </div>
+          <div class="proto-screen">
+            <span class="proto-screen-label">Screen 4</span>
+            <div class="proto-screen-name">Next-step kit</div>
+            <div class="proto-screen-desc">Pre-filled bundle based on previous order. The same decision engine drives O2, O3, O4 — reuse without re-friction.</div>
+          </div>
+        </div>
+        <div class="proto-principle">
+          <span class="proto-principle-label">Design principle</span>
+          <div class="proto-principle-text">We don't wait for the user to come back — we re-enter at the right moment. The dashboard gives users a mental model of what comes next. <strong>The same bundle engine that won the first order drives every order that follows.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finale -->
+    <div class="proto-finale">
+      <span class="proto-finale-label">Strategic synthesis</span>
+      <div class="proto-finale-title">Together, these two systems do different jobs</div>
+      <div class="proto-finale-cols">
+        <div class="proto-finale-card">
+          <span class="proto-finale-card-tag">Flow 1 · Project Checkout Engine</span>
+          <p><strong>Wins the first order</strong> by removing thinking. Search, estimation, accessory discovery, and cost calculation collapse into a single guided decision.</p>
+        </div>
+        <div class="proto-finale-card">
+          <span class="proto-finale-card-tag">Flow 2 · Renovation OS</span>
+          <p><strong>Wins the next 3–4 orders</strong> by owning the project timeline. Smart re-engagement at the right moment, not just at the next session.</p>
+        </div>
+      </div>
+      <div class="proto-finale-close">Most solutions improve conversion. This approach captures the <em>entire project lifecycle</em> — effectively shifting Homerun from a catalog-led marketplace to a <em>problem-solving layer</em>, which is where offline suppliers currently dominate.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Closing Quote -->
+<div class="wrapper">
+  <div class="closing-quote">
+    <p>The best product thinking combines behavioural insight with data specificity. Field research is necessary but not sufficient.</p>
+  </div>
+</div>
+
+<footer>
+  <span>HOMERUN</span> · HOMERUN Strategy · Consumer &amp; Pro Experience · April 2026
+</footer>
+
+</body>
+</html>

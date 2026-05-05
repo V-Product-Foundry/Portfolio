@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Netflix Strategy — Vivaswan</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNGNkYxRTkiLz4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjg0QzE4IiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDwhLS0gTGVmdCBWIC0tPgogIDxwb2x5bGluZSBwb2ludHM9IjksMTYgMTgsNDQgMjcsMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0I4NEMxOCIgc3Ryb2tlLXdpZHRoPSI0LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gUmlnaHQgViAtLT4KICA8cG9seWxpbmUgcG9pbnRzPSIyOCwxNiAzNyw0NCA0NiwxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUExNzMwIiBzdHJva2Utd2lkdGg9IjQuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBTbWFsbCBhY2NlbnQgZG90IC0tPgogIDxjaXJjbGUgY3g9IjU1IiBjeT0iNDciIHI9IjQiIGZpbGw9IiNCODRDMTgiLz4KPC9zdmc+"/>
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiNGNkYxRTkiLz4KICA8cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSIxNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQjg0QzE4IiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDwhLS0gTGVmdCBWIC0tPgogIDxwb2x5bGluZSBwb2ludHM9IjksMTYgMTgsNDQgMjcsMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0I4NEMxOCIgc3Ryb2tlLXdpZHRoPSI0LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gUmlnaHQgViAtLT4KICA8cG9seWxpbmUgcG9pbnRzPSIyOCwxNiAzNyw0NCA0NiwxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMUExNzMwIiBzdHJva2Utd2lkdGg9IjQuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPCEtLSBTbWFsbCBhY2NlbnQgZG90IC0tPgogIDxjaXJjbGUgY3g9IjU1IiBjeT0iNDciIHI9IjQiIGZpbGw9IiNCODRDMTgiLz4KPC9zdmc+"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #E50914;
+    --red-dim: #8b0000;
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1e1e1e;
+    --surface3: #2a2a2a;
+    --border: rgba(255,255,255,0.08);
+    --text: #e5e5e5;
+    --muted: #9e9e9e;
+    --accent: #f5a623;
+    --white: #ffffff;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ─── YOUTUBE THUMBNAIL / INLINE PLAYER ─── */
+  .yt-thumb-wrap {
+    margin: 28px auto 4px;
+    max-width: 620px;
+    text-align: center;
+  }
+  .yt-thumb-label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); font-weight: 600; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .yt-thumb-label::before,
+  .yt-thumb-label::after {
+    content: ''; display: inline-block; width: 20px; height: 2px; background: var(--red);
+  }
+  /* clickable thumbnail */
+  .yt-thumb-click {
+    display: block; position: relative; cursor: pointer;
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    aspect-ratio: 16/9;
+  }
+  .yt-thumb-click:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(229,9,20,0.3);
+    border-color: rgba(229,9,20,0.5);
+  }
+  .yt-thumb-click img {
+    width: 100%; height: 100%; display: block; object-fit: cover;
+  }
+  .yt-play-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 100%);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s ease;
+  }
+  .yt-thumb-click:hover .yt-play-overlay { background: rgba(0,0,0,0.15); }
+  .yt-play-btn {
+    width: 72px; height: 50px; background: #ff0000; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(229,9,20,0.7);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .yt-thumb-click:hover .yt-play-btn {
+    transform: scale(1.12);
+    box-shadow: 0 8px 32px rgba(229,9,20,0.9);
+  }
+  .yt-play-btn svg { width: 24px; height: 24px; fill: #fff; margin-left: 4px; }
+  /* inline iframe once playing */
+  .yt-player-container iframe {
+    width: 100%; aspect-ratio: 16/9; display: block;
+    border-radius: 10px; border: none;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+  /* caption bar below */
+  .yt-thumb-caption {
+    margin-top: 12px; font-size: 12px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .yt-yt-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    color: #ff4444; text-decoration: none; font-weight: 600;
+    font-size: 12px; letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .yt-yt-link:hover { color: #ff7777; }
+  .yt-yt-link svg { width: 14px; height: 14px; fill: currentColor; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 8vw;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 70% 40%, #3a000a 0%, transparent 65%),
+                radial-gradient(ellipse 50% 70% at 5% 80%, #1a0000 0%, transparent 60%),
+                var(--bg);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+  }
+  .hero-logo {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 3vw, 28px);
+    letter-spacing: 10px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 56px;
+    opacity: 0.9;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 7vw, 96px);
+    line-height: 0.95;
+    color: var(--white);
+    max-width: 900px;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-desc {
+    max-width: 600px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+    border-left: 3px solid var(--red);
+    padding-left: 20px;
+    margin-bottom: 48px;
+  }
+  .hero-meta {
+    display: flex; gap: 40px; flex-wrap: wrap;
+  }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .hero-meta-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+  .hero-meta-val { font-weight: 600; color: var(--white); font-size: 14px; }
+
+  .approach-strip {
+    background: var(--red);
+    padding: 16px 8vw;
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--white);
+    overflow-x: auto;
+  }
+  .approach-strip .step { opacity: 0.7; }
+  .approach-strip .arrow { color: rgba(255,255,255,0.4); }
+  .approach-strip .active { opacity: 1; }
+
+  /* ─── SECTION WRAPPER ─── */
+  .section {
+    padding: 80px 8vw;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:nth-child(even) { background: var(--surface); }
+
+  .section-tag {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--red); font-weight: 600; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 5vw, 64px);
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 48px;
+    letter-spacing: 1px;
+  }
+
+  /* ─── GOAL SECTION ─── */
+  .goal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media(max-width:768px){ .goal-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+  .card p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+  .key-features { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 32px; }
+  .feature-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .feature-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .feature-text .ft { font-weight: 600; color: var(--white); font-size: 14px; margin-bottom: 4px; }
+  .feature-text p { font-size: 13px; color: var(--muted); }
+  .revenue-note {
+    margin-top: 24px; background: rgba(229,9,20,0.08); border: 1px solid rgba(229,9,20,0.25);
+    border-radius: 8px; padding: 16px 20px; color: var(--muted); font-size: 13px;
+  }
+
+  /* ─── SWOT ─── */
+  .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+  @media(max-width:600px){ .swot-grid { grid-template-columns: 1fr; } }
+  .swot-card { border-radius: 8px; padding: 24px; }
+  .swot-card.s { background: rgba(34,139,34,0.12); border: 1px solid rgba(34,139,34,0.25); }
+  .swot-card.w { background: rgba(229,9,20,0.08); border: 1px solid rgba(229,9,20,0.2); }
+  .swot-card.o { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); }
+  .swot-card.t { background: rgba(100,100,255,0.08); border: 1px solid rgba(100,100,255,0.2); }
+  .swot-head { font-family: var(--font-display); font-size: 20px; letter-spacing: 2px; margin-bottom: 14px; }
+  .swot-card.s .swot-head { color: #4caf50; }
+  .swot-card.w .swot-head { color: var(--red); }
+  .swot-card.o .swot-head { color: var(--accent); }
+  .swot-card.t .swot-head { color: #8888ff; }
+  .swot-card ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .swot-card li { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+  .swot-card li::before { content: '—'; opacity: 0.4; flex-shrink: 0; }
+  .swot-card li strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+  /* ─── TABLE ─── */
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: var(--red); }
+  thead th { color: var(--white); padding: 14px 16px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 1px; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td { padding: 14px 16px; color: var(--muted); vertical-align: top; }
+  tbody td:first-child { color: var(--text); font-weight: 500; }
+  .highlight-cell { color: var(--white) !important; font-weight: 600 !important; }
+
+  /* ─── USER CARDS ─── */
+  .users-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .user-type-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .user-type-card .icon { font-size: 28px; }
+  .user-type-card .utype { font-weight: 700; font-size: 13px; color: var(--white); }
+  .user-type-card .udesc { font-size: 12px; color: var(--muted); }
+
+  .persona-cards { display: flex; flex-direction: column; gap: 20px; margin-bottom: 48px; }
+  .persona {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 28px; display: grid;
+    grid-template-columns: 56px 180px 1fr 1fr;
+    gap: 20px; align-items: start;
+  }
+  @media(max-width:900px){ .persona { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:600px){ .persona { grid-template-columns: 1fr; } }
+  .persona .p-icon { font-size: 40px; }
+  .persona .p-info .p-name { font-weight: 700; color: var(--white); font-size: 15px; }
+  .persona .p-info .p-type { font-size: 11px; color: var(--red); text-transform: uppercase; letter-spacing: 2px; margin: 4px 0; }
+  .persona .p-info .p-attr { font-size: 12px; color: var(--muted); }
+  .persona .p-motiv h4, .persona .p-frust h4 {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+  }
+  .persona .p-motiv p, .persona .p-frust p { font-size: 13px; color: var(--text); }
+
+  .journeys { display: flex; flex-direction: column; gap: 14px; }
+  .journey-item {
+    background: var(--surface2); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0;
+    padding: 14px 20px;
+  }
+  .journey-item .jname { font-weight: 700; color: var(--white); font-size: 13px; margin-bottom: 4px; }
+  .journey-item p { font-size: 13px; color: var(--muted); }
+
+  /* ─── PROBLEMS ─── */
+  .problems-table-wrapper { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .badge-red { background: rgba(229,9,20,0.15); color: #ff6b6b; border: 1px solid rgba(229,9,20,0.3); }
+  .badge-orange { background: rgba(245,166,35,0.12); color: #ffd080; border: 1px solid rgba(245,166,35,0.3); }
+  .badge-blue { background: rgba(100,150,255,0.12); color: #90b8ff; border: 1px solid rgba(100,150,255,0.3); }
+  .badge-green { background: rgba(80,200,120,0.12); color: #80d0a0; border: 1px solid rgba(80,200,120,0.3); }
+
+  /* ─── RICE ─── */
+  .rice-row-p0 td:first-child { border-left: 3px solid var(--red); }
+  .rice-row-p1 td:first-child { border-left: 3px solid var(--accent); }
+  .rice-row-p2 td:first-child { border-left: 3px solid #90b8ff; }
+  .rice-row-p3 td:first-child { border-left: 3px solid #80d0a0; }
+  .rice-row-p4 td:first-child { border-left: 3px solid #888; }
+  .rice-score { font-family: var(--font-display); font-size: 22px; color: var(--white); }
+
+  /* ─── SOLUTIONS ─── */
+  .objectives-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .obj-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 22px; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .obj-num {
+    font-family: var(--font-display); font-size: 40px; line-height: 1; color: rgba(229,9,20,0.3); flex-shrink: 0;
+  }
+  .obj-card h3 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .obj-card p { font-size: 13px; color: var(--muted); }
+
+  .solution-block {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    margin-bottom: 24px; overflow: hidden;
+  }
+  .solution-header {
+    background: var(--surface3); padding: 20px 28px;
+    display: flex; gap: 16px; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .solution-num {
+    font-family: var(--font-display); font-size: 48px; line-height: 1;
+    color: rgba(229,9,20,0.25); flex-shrink: 0; min-width: 52px;
+  }
+  .solution-header-text .sol-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; color: var(--white); }
+  .solution-header-text .sol-type { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-top: 4px; }
+  .solution-body { padding: 24px 28px; }
+  .sol-idea { font-size: 14px; color: var(--text); margin-bottom: 18px; line-height: 1.7; }
+  .sol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media(max-width:700px){ .sol-grid { grid-template-columns: 1fr; } }
+  .sol-block h4 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .sol-block p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .risk-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .risk-list li { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+  .risk-list li::before { content: '⚠'; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+  .risk-list li strong { color: var(--text); }
+
+  /* ─── SOLUTION PRIORITIZATION ─── */
+  .sol-priority-note {
+    background: rgba(229,9,20,0.06); border: 1px solid rgba(229,9,20,0.2);
+    border-radius: 8px; padding: 20px 24px; margin-bottom: 32px; font-size: 14px; color: var(--muted); line-height: 1.7;
+  }
+
+  /* ─── METRICS ─── */
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 48px; }
+  .metric-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 24px;
+  }
+  .metric-card .m-title { font-weight: 700; color: var(--white); font-size: 14px; margin-bottom: 8px; }
+  .metric-card p { font-size: 13px; color: var(--muted); }
+
+  /* ─── APPENDIX ─── */
+  .appendix-grids { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+  .legend-group h4 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .legend-item { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .legend-dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  }
+  .legend-item span { font-size: 13px; color: var(--text); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px 8vw;
+    background: var(--surface);
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border); flex-wrap: wrap; gap: 16px;
+  }
+  footer .f-brand { font-family: var(--font-display); font-size: 28px; letter-spacing: 4px; color: var(--red); }
+  footer .f-credit { font-size: 12px; color: var(--muted); text-align: right; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 8vw;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 18px; display: block; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: var(--white); border-bottom-color: var(--red); }
+
+  /* ─── UTILS ─── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  .conclusion-box {
+    background: rgba(229,9,20,0.07); border: 1px solid rgba(229,9,20,0.25);
+    border-radius: 10px; padding: 24px 28px; margin-top: 24px; font-size: 14px; color: var(--text); line-height: 1.75;
+  }
+  .market-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+  .stat-box {
+    background: var(--surface3); border-radius: 8px; padding: 20px; text-align: center;
+  }
+  .stat-num { font-family: var(--font-display); font-size: 42px; color: var(--red); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  @keyframes ytFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#goal">Goal</a>
+  <a href="#competitive">Competitive</a>
+  <a href="#users">Users</a>
+  <a href="#problems">Problems</a>
+  <a href="#prioritization">Prioritization</a>
+  <a href="#solutions">Solutions</a>
+  <a href="#sol-priority">Solution Priority</a>
+  <a href="#metrics">Metrics</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-logo">Netflix</div>
+  <div class="hero-eyebrow">Product Strategy Case Study</div>
+  <h1 class="hero-title">Driving User <span>Growth</span> &amp; Engagement</h1>
+  <p class="hero-desc">
+    Strategies for Personalized Discovery, Affordability, and Retention. As a hypothetical Product Manager at Netflix, the objective is to enhance user engagement and drive subscriber growth in a highly competitive streaming market, boosting retention and acquisition through innovative, user-centric solutions.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="hero-meta-label">Author</span><span class="hero-meta-val">Vivaswan</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Role</span><span class="hero-meta-val">Hypothetical PM</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Focus</span><span class="hero-meta-val">Engagement &amp; Growth</span></div>
+  </div>
+</div>
+<div class="approach-strip">
+  <span class="active">Goal</span><span class="arrow">→</span>
+  <span class="step">Competitive Analysis</span><span class="arrow">→</span>
+  <span class="step">Persona</span><span class="arrow">→</span>
+  <span class="step">Problem</span><span class="arrow">→</span>
+  <span class="step">Prioritization</span><span class="arrow">→</span>
+  <span class="step">Solution</span><span class="arrow">→</span>
+  <span class="step">Prioritization</span><span class="arrow">→</span>
+  <span class="step">Metrics</span>
+</div>
+
+<!-- ─── GOAL ─── -->
+<section class="section" id="goal">
+  <div class="section-tag">Slide 2</div>
+  <h2 class="section-title">How Would You Improve Netflix?</h2>
+  <div class="goal-grid">
+    <div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">🦾 Goal</div>
+        <p>To boost Netflix user engagement and subscriber growth, as increased engagement enhances retention, lowers churn, and maximizes lifetime value in a competitive streaming landscape.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">About Netflix</div>
+        <p>Netflix is a global leader in subscription-based streaming, offering a vast library of movies, TV shows, documentaries, and original content. With over <strong style="color:var(--white)">300 million paid memberships</strong> across <strong style="color:var(--white)">190+ countries</strong>, Netflix is known for its personalized recommendations, high-quality originals, and seamless user experience.</p>
+        <hr class="divider" style="margin:16px 0;">
+        <p>In the next five years, Netflix aspires to solidify its position as the global leader in personalized, inclusive streaming, aiming for <strong style="color:var(--red)">500M+ subscribers</strong> through AI-powered personalization, cost-effective tiers, and creator-led discovery. The urgency arises from AI's transformative impact on content curation, mobile-first growth in markets like India (600M+ smartphone users, 80% consuming short videos), and the creator economy's viral reach on platforms like Instagram and TikTok.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="height:100%;">
+        <div class="card-title">Key Features</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="feature-item"><span class="feature-icon">✍️</span><div class="feature-text"><div class="ft">Content Library</div><p>A diverse catalogue of licensed and original content, including series, films, and documentaries, tailored to global and regional audiences.</p></div></div>
+          <div class="feature-item"><span class="feature-icon">🎖️</span><div class="feature-text"><div class="ft">Personalized Recommendations</div><p>AI-driven algorithms suggest content based on user viewing habits, enhancing discovery.</p></div></div>
+          <div class="feature-item"><span class="feature-icon">☯️</span><div class="feature-text"><div class="ft">Multi-Device Streaming</div><p>Supports streaming on TVs, mobiles, tablets, and gaming consoles with features like offline downloads.</p></div></div>
+          <div class="feature-item"><span class="feature-icon">🪝</span><div class="feature-text"><div class="ft">Original Productions</div><p>Investments in exclusive content (e.g., Stranger Things, Squid Game) to attract and retain subscribers.</p></div></div>
+          <div class="feature-item"><span class="feature-icon">🌍</span><div class="feature-text"><div class="ft">Global Accessibility</div><p>Localized content, subtitles, and dubbing for diverse markets, including regional originals.</p></div></div>
+        </div>
+        <div class="revenue-note" style="margin-top:20px;">Netflix earns revenue primarily through tiered subscription plans and advertisements (Mobile, Basic, Standard with ads, Standard, Premium)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMPETITIVE ─── -->
+<section class="section" id="competitive">
+  <div class="section-tag">Slide 3</div>
+  <h2 class="section-title">Competitor Analysis</h2>
+  <p style="color:var(--muted);max-width:800px;margin-bottom:32px;">Netflix competes with global and regional streaming platforms like Amazon Prime Video, Disney+, Hulu, HBO Max, YouTube, JioCinema, and Disney Hotstar (JioStar). Each platform targets user engagement through content, pricing, or unique features.</p>
+
+  <div class="swot-grid">
+    <div class="swot-card s">
+      <div class="swot-head">💪 Strengths</div>
+      <ul>
+        <li><div><strong>Global Scale</strong>Massive subscriber base and presence in 190+ countries.</div></li>
+        <li><div><strong>Original Content</strong>High-quality exclusives drive brand loyalty.</div></li>
+        <li><div><strong>Tech Leadership</strong>Superior recommendation engine and streaming quality.</div></li>
+      </ul>
+    </div>
+    <div class="swot-card w">
+      <div class="swot-head">😩 Weaknesses</div>
+      <ul>
+        <li><div><strong>Content Licensing Costs</strong>Heavy reliance on licensed content increases expenses.</div></li>
+        <li><div><strong>Churn in Price-Sensitive Markets</strong>High subscription costs deter users in regions like India (South Asia) or LATAM.</div></li>
+        <li><div><strong>Content Discovery</strong>Some users struggle to find relevant content despite personalization.</div></li>
+      </ul>
+    </div>
+    <div class="swot-card o">
+      <div class="swot-head">💡 Opportunities</div>
+      <ul>
+        <li><div><strong>Ad-Supported Tier</strong>Attract price-sensitive users with a lower-cost, ad-supported plan.</div></li>
+        <li><div><strong>Interactive Features</strong>Enhance engagement with gamified or social viewing experiences.</div></li>
+        <li><div><strong>Regional Expansion</strong>Deepen penetration in markets like India with localized pricing and content.</div></li>
+      </ul>
+    </div>
+    <div class="swot-card t">
+      <div class="swot-head">😨 Threats</div>
+      <ul>
+        <li><div><strong>Competitive Pressure</strong>Rivals like Disney+ (JioStar in India) and JioCinema offer lower prices or free tiers.</div></li>
+        <li><div><strong>Content Saturation</strong>Users overwhelmed by choice across multiple platforms.</div></li>
+        <li><div><strong>Regulatory Risks</strong>Licensing and data privacy regulations vary by region.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:26px;color:var(--white);margin-bottom:20px;">Competitive Comparison</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Comparison</th><th>Netflix Highlights</th><th>Competitor Highlights</th><th>Engagement Standard</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight-cell">Netflix vs. Disney+</td><td>Superior global reach, broader content variety.</td><td>Strong IP-driven content (Marvel, Star Wars).</td><td>Disney+ excels in family-friendly engagement.</td></tr>
+        <tr><td class="highlight-cell">Netflix vs. Amazon Prime</td><td>Advanced personalization, premium originals.</td><td>Bundled with Prime benefits, lower perceived cost.</td><td>Prime leverages ecosystem for retention.</td></tr>
+        <tr><td class="highlight-cell">Netflix vs. JioCinema</td><td>High-quality originals, global appeal.</td><td>Free/ad-supported model, strong in India.</td><td>JioCinema drives engagement with local content.</td></tr>
+        <tr><td class="highlight-cell">Netflix vs. Hulu</td><td>Better international presence, larger library.</td><td>Live TV and next-day episodes in the US.</td><td>Hulu engages with timely content.</td></tr>
+        <tr><td class="highlight-cell">Netflix vs. YouTube</td><td>Subscription model ensures ad-free experience.</td><td>Free content, massive user-generated library.</td><td>YouTube dominates short-form engagement.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="conclusion-box" style="margin-top:24px;">
+    <strong style="color:var(--white);">Conclusion:</strong> Netflix leads with its global scale, original content, and tech expertise but faces challenges from cost-sensitive markets and competitors' free or bundled models. Opportunities lie in affordable tiers, interactive features, and deeper regional personalization to boost engagement.
+  </div>
+</section>
+
+<!-- ─── USERS ─── -->
+<section class="section" id="users">
+  <div class="section-tag">Slide 4</div>
+  <h2 class="section-title">Users of Netflix</h2>
+  <p style="color:var(--muted);max-width:800px;margin-bottom:32px;">Netflix serves diverse user groups, from casual viewers to niche content enthusiasts, across global markets. (Users may belong to multiple types at the same time.)</p>
+
+  <div class="users-grid">
+    <div class="user-type-card"><span class="icon">✍🏼</span><div class="utype">Casual Viewers</div><div class="udesc">Watch popular shows or movies occasionally, often on weekends or evenings.</div></div>
+    <div class="user-type-card"><span class="icon">🤷🏻‍♀️</span><div class="utype">Binge-Watchers</div><div class="udesc">Consume entire series in one sitting, seeking immersive storytelling.</div></div>
+    <div class="user-type-card"><span class="icon">👔</span><div class="utype">Families</div><div class="udesc">Share accounts for multi-generational content (kids' shows, dramas, etc.).</div></div>
+    <div class="user-type-card"><span class="icon">🤔</span><div class="utype">Niche Genre Fans</div><div class="udesc">Seek specific genres (e.g., anime, K-dramas, documentaries).</div></div>
+    <div class="user-type-card"><span class="icon">👨🏻‍💻</span><div class="utype">Mobile-Only Users</div><div class="udesc">Stream on smartphones, often in low-bandwidth or price-sensitive regions.</div></div>
+    <div class="user-type-card"><span class="icon">👩🏻‍💼</span><div class="utype">Expat Communities</div><div class="udesc">Watch content from their home countries while living abroad.</div></div>
+    <div class="user-type-card"><span class="icon">🤑</span><div class="utype">Content Creators</div><div class="udesc">Use Netflix for inspiration or to analyse trends for their own work.</div></div>
+    <div class="user-type-card"><span class="icon">👩🏻‍🎓</span><div class="utype">Students</div><div class="udesc">Watch on shared accounts or discounted plans, prioritizing affordability.</div></div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:26px;color:var(--white);margin-bottom:20px;">Target User Personas</h3>
+  <div class="persona-cards">
+    <div class="persona">
+      <div class="p-icon">🙍🏻‍♂️</div>
+      <div class="p-info"><div class="p-name">Arjun</div><div class="p-type">Mobile-Only Users</div><div class="p-attr">Price-Sensitive, India-based</div></div>
+      <div class="p-motiv"><h4>Motivations</h4><p>Arjun wants affordable access to regional and global content on his phone with minimal buffering.</p></div>
+      <div class="p-frust"><h4>Frustrations</h4><p>High subscription costs, inconsistent streaming quality on low-bandwidth networks, lack of regional content.</p></div>
+    </div>
+    <div class="persona">
+      <div class="p-icon">👩🏻‍💼</div>
+      <div class="p-info"><div class="p-name">Emma</div><div class="p-type">Binge-Watchers</div><div class="p-attr">Urban Professional, US-based</div></div>
+      <div class="p-motiv"><h4>Motivations</h4><p>Emma seeks seamless discovery of new series to binge, with minimal interruptions.</p></div>
+      <div class="p-frust"><h4>Frustrations</h4><p>Overwhelmed by content choices, outdated recommendations, lack of season recaps.</p></div>
+    </div>
+    <div class="persona">
+      <div class="p-icon">🙎🏻‍♀️</div>
+      <div class="p-info"><div class="p-name">Sofia</div><div class="p-type">Families</div><div class="p-attr">Parent, LATAM-based</div></div>
+      <div class="p-motiv"><h4>Motivations</h4><p>Sofia wants safe, engaging content for her kids and herself on one account.</p></div>
+      <div class="p-frust"><h4>Frustrations</h4><p>Limited parental controls, difficulty finding family-friendly content across languages.</p></div>
+    </div>
+    <div class="persona">
+      <div class="p-icon">👨🏻‍💻</div>
+      <div class="p-info"><div class="p-name">Priya</div><div class="p-type">Expat Communities</div><div class="p-attr">Expat in UK, India-based</div></div>
+      <div class="p-motiv"><h4>Motivations</h4><p>Priya seeks Indian content (e.g., Bollywood, regional shows) while living in the UK.</p></div>
+      <div class="p-frust"><h4>Frustrations</h4><p>Geo-restrictions on Indian content, difficulty finding culturally relevant shows.</p></div>
+    </div>
+    <div class="persona">
+      <div class="p-icon">👩🏻‍🎓</div>
+      <div class="p-info"><div class="p-name">Liam</div><div class="p-type">Students</div><div class="p-attr">Budget-Conscious, UK-based</div></div>
+      <div class="p-motiv"><h4>Motivations</h4><p>Liam wants affordable access to Netflix for study breaks, ideally via student discounts.</p></div>
+      <div class="p-frust"><h4>Frustrations</h4><p>High costs relative to budget, limited student-specific promotions.</p></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:26px;color:var(--white);margin-bottom:20px;">User Journeys</h3>
+  <div class="journeys">
+    <div class="journey-item"><div class="jname">Arjun</div><p>Discovers Netflix via social media → signs up for a trial → struggles with pricing → watches regional shows on mobile → churns due to cost.</p></div>
+    <div class="journey-item"><div class="jname">Emma</div><p>Logs in after work → browses recommendations → gets frustrated by irrelevant suggestions → binges a series → forgets to resume older shows.</p></div>
+    <div class="journey-item"><div class="jname">Sofia</div><p>Sets up profiles for kids → searches for dubbed content → faces navigation issues → watches with family but struggles with cross-language discovery.</p></div>
+    <div class="journey-item"><div class="jname">Priya</div><p>Logs in from the UK → hits geo-restrictions on Indian content → searches for Bollywood alternatives → feels disconnected from home culture.</p></div>
+    <div class="journey-item"><div class="jname">Liam</div><p>Shares a friend's account → watches during breaks → considers subscribing but finds pricing too high → churns after trial.</p></div>
+  </div>
+</section>
+
+<!-- ─── PROBLEMS ─── -->
+<section class="section" id="problems">
+  <div class="section-tag">Slide 5</div>
+  <h2 class="section-title">Users' Problems</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>User</th><th>Problem Category</th><th>Problem Identification</th><th>Problem Statement</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight-cell">🙍🏻‍♂️ Arjun</td><td><span class="badge badge-red">Affordability</span></td><td>High subscription costs.</td><td>Arjun finds Netflix's pricing unaffordable compared to free platforms like JioCinema.</td></tr>
+        <tr><td class="highlight-cell">🙍🏻‍♂️ Arjun</td><td><span class="badge badge-blue">Streaming Quality</span></td><td>Poor performance on low-bandwidth networks.</td><td>Arjun experiences buffering issues on his mobile in rural areas.</td></tr>
+        <tr><td class="highlight-cell">👩🏻‍💼 Emma</td><td><span class="badge badge-orange">Content Discovery</span></td><td>Overwhelmed by content choices.</td><td>Emma struggles to find new shows that match her preferences due to generic recommendations.</td></tr>
+        <tr><td class="highlight-cell">👩🏻‍💼 Emma</td><td><span class="badge badge-green">Retention</span></td><td>Forgets to resume older shows.</td><td>Emma drops off before new seasons due to lack of reminders or recaps.</td></tr>
+        <tr><td class="highlight-cell">🙎🏻‍♀️ Sofia</td><td><span class="badge badge-blue">Family Features</span></td><td>Limited parental controls.</td><td>Sofia finds it hard to manage safe content for her kids across profiles.</td></tr>
+        <tr><td class="highlight-cell">🙎🏻‍♀️ Sofia</td><td><span class="badge badge-green">Localization</span></td><td>Difficulty finding dubbed content.</td><td>Sofia struggles to discover family-friendly content in her native language.</td></tr>
+        <tr><td class="highlight-cell">👨🏻‍💻 Priya</td><td><span class="badge badge-red">Geo-Restrictions</span></td><td>Limited access to home-country content.</td><td>Priya cannot access Indian content due to regional licensing restrictions.</td></tr>
+        <tr><td class="highlight-cell">👩🏻‍🎓 Liam</td><td><span class="badge badge-red">Affordability</span></td><td>High costs for students.</td><td>Liam finds Netflix's pricing too expensive for his student budget.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── PRIORITIZATION ─── -->
+<section class="section" id="prioritization">
+  <div class="section-tag">Slide 6</div>
+  <h2 class="section-title">Problem Prioritization</h2>
+  <p style="color:var(--muted);max-width:860px;margin-bottom:32px;">To address user engagement and subscriber growth, problems are prioritized using the <strong style="color:var(--white);">RICE framework</strong> (Reach, Impact, Confidence, Effort), focusing on their potential to drive acquisition, retention, and user satisfaction in a competitive streaming market.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Priority</th><th>Problem Category</th><th>Problem Identification</th><th>Persona</th><th>Reach</th><th>Impact</th><th>Confidence</th><th>Effort</th><th>RICE Score</th></tr></thead>
+      <tbody>
+        <tr class="rice-row-p0"><td><span class="badge badge-red">P0</span></td><td>Content Discovery</td><td>Overwhelmed by content choices</td><td>Emma, Priya</td><td>70% of users (210M)</td><td>+20% watch time</td><td>High</td><td>Medium</td><td><span class="rice-score">1400</span></td></tr>
+        <tr class="rice-row-p1"><td><span class="badge badge-orange">P1</span></td><td>Affordability</td><td>High subscription costs</td><td>Arjun, Liam</td><td>40% in price-sensitive markets (120M)</td><td>+15-25% acquisition</td><td>High</td><td>High</td><td><span class="rice-score">900</span></td></tr>
+        <tr class="rice-row-p2"><td><span class="badge badge-blue">P2</span></td><td>Retention</td><td>Forgetting to resume older shows</td><td>Emma</td><td>20% of binge-watchers (60M)</td><td>+10% retention</td><td>Medium</td><td>Medium</td><td><span class="rice-score">500</span></td></tr>
+        <tr class="rice-row-p2"><td><span class="badge badge-blue">P2</span></td><td>Streaming Quality</td><td>Poor performance on low-bandwidth networks</td><td>Arjun</td><td>10-15% of mobile users (30-45M)</td><td>+10% session duration</td><td>High</td><td>Medium</td><td><span class="rice-score">300</span></td></tr>
+        <tr class="rice-row-p3"><td><span class="badge badge-green">P3</span></td><td>Family Features</td><td>Limited parental controls</td><td>Sofia</td><td>30% of families (90M)</td><td>+10% retention</td><td>High</td><td>Medium</td><td><span class="rice-score">300</span></td></tr>
+        <tr class="rice-row-p3"><td><span class="badge badge-green">P3</span></td><td>Localization</td><td>Difficulty finding dubbed content</td><td>Sofia, Priya</td><td>20% in non-English markets (60M)</td><td>+10% engagement</td><td>Medium</td><td>High</td><td><span class="rice-score">200</span></td></tr>
+        <tr class="rice-row-p4"><td><span class="badge" style="background:rgba(128,128,128,0.15);color:#aaa;border-color:rgba(128,128,128,0.3)">P4</span></td><td>Geo-Restrictions</td><td>Limited access to home-country content</td><td>Priya</td><td>10% of expats (30M)</td><td>+5% retention</td><td>Medium</td><td>High</td><td><span class="rice-score">100</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="conclusion-box" style="margin-top:24px;">
+    <strong style="color:var(--white);">Key Insights:</strong><br>
+    <strong>P0 (Content Discovery):</strong> Affects most users, critical for engagement.<br>
+    <strong>P1 (Affordability):</strong> Targets price-sensitive markets like India and other emerging markets, key for growth.<br>
+    <strong>P2–P4:</strong> Address niche but impactful issues, balancing retention and accessibility.
+  </div>
+</section>
+
+<!-- ─── SOLUTIONS ─── -->
+<section class="section" id="solutions">
+  <div class="section-tag">Slides 7–22</div>
+  <h2 class="section-title">Solution Objectives</h2>
+  <p style="color:var(--muted);max-width:700px;margin-bottom:32px;">Based on prioritized problems, the objectives are to:</p>
+  <div class="objectives-list">
+    <div class="obj-card"><div class="obj-num">01</div><div><h3>Enhance Content Discovery</h3><p>Reduce choice overload with intuitive, AI-driven tools.</p></div></div>
+    <div class="obj-card"><div class="obj-num">02</div><div><h3>Improve Affordability</h3><p>Attract price-sensitive users through accessible pricing models.</p></div></div>
+    <div class="obj-card"><div class="obj-num">03</div><div><h3>Boost Retention</h3><p>Increase engagement with personalized features to reduce churn.</p></div></div>
+    <div class="obj-card"><div class="obj-num">04</div><div><h3>Optimize Accessibility</h3><p>Improve streaming quality and localization for diverse markets.</p></div></div>
+  </div>
+
+  <!-- Solution 1 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">1</div>
+      <div class="solution-header-text">
+        <div class="sol-title">AI-Powered Chatbot for Content Discovery</div>
+        <div class="sol-type">P0 — Content Discovery</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Introduce an AI chatbot that users can interact with to find content, receive tailored suggestions, and get short descriptions of shows or movies.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+                <div class="yt-player-container" id="yt-NjYPEsOj7tw">
+          <div class="yt-thumb-click" onclick="playYT('NjYPEsOj7tw')">
+            <img src="https://img.youtube.com/vi/NjYPEsOj7tw/hqdefault.jpg" alt="AI-Powered Chatbot for Content Discovery — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=NjYPEsOj7tw" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">AI-Powered Chatbot for Content Discovery</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Implement an NLP-based chatbot accessible via the Netflix app or web. Users can ask, "Find me a thriller under 2 hours" or "What's a good Bollywood movie?" The chatbot responds with suggestions and concise summaries (e.g. "RRR: An epic action drama about two Indian revolutionaries, 3 hours, Hindi with subtitles").</p>
+          <br><h4>Impact</h4>
+          <p>Enhances content discovery for Emma and Priya, reduces choice overload, and increases engagement through conversational UX. Inspired by conversational AI like Grok, ChatGPT or Spotify's AI DJ.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Irrelevant Results</strong> — May misinterpret queries, reducing trust.</li>
+            <li><strong>Language Gaps</strong> — Struggles with regional slang or mixed languages.</li>
+            <li><strong>Integration Issues</strong> — Risk of cluttered UI or inconsistent experience.</li>
+            <li><strong>Content Bias</strong> — May over-promote popular titles, hurting true discovery.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 2 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">2</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Scene-Based Shorts Creator Program</div>
+        <div class="sol-type">P0, P1 — Content Discovery &amp; Acquisition</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Enable content creators to access a curated library of pre-approved Netflix clips (15–60 seconds) for posting on Instagram Reels, YouTube Shorts, TikTok, and Facebook, with tools for original audio, AI-generated voiceovers, or subtitles. Partner with influencers in under-penetrated markets to promote shows, driving viral user acquisition and content discovery.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+        <div class="yt-player-container" id="yt-tFKUpxmk9P0">
+          <div class="yt-thumb-click" onclick="playYT('tFKUpxmk9P0')">
+            <img src="https://img.youtube.com/vi/tFKUpxmk9P0/hqdefault.jpg" alt="Scene-Based Shorts Creator Program for Content Discovery — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=tFKUpxmk9P0" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">Scene-Based Shorts Creator Program for Content Discovery</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Build a creator portal within the Netflix app or website, offering a searchable library of clips from popular and back-catalogue content (e.g., Squid Game, Money Heist). Provide editing tools for adding voiceovers (using Netflix's AI dubbing tech), subtitles in multiple languages, and branded "Watch on Netflix" CTAs. Implement DRM and watermarks to prevent piracy. Partner with influencers in key markets (e.g., India, Brazil) for co-branded campaigns, offering revenue-sharing for conversions. Add a "Trending Clips" section in the Netflix app linking to full episodes.</p>
+          <br><h4>Impact</h4>
+          <p>Drives user acquisition for price-sensitive users like Arjun and Liam by leveraging social media's viral reach (e.g., 400M+ Instagram users in India). Enhances content discovery for Emma and Priya by showcasing diverse titles through creator-driven Reels. Boosts back-catalogue engagement, increasing watch time for older shows.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: Reels featuring Disney+'s The Mandalorian draw significant engagement on TikTok, while JioCinema's IPL highlight videos gained millions of views across Instagram.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Content Control</strong> — Risk of spoilers or out-of-context clips damaging IP.</li>
+            <li><strong>Influencer ROI</strong> — Requires careful vetting and performance tracking.</li>
+            <li><strong>Brand Dilution</strong> — Overexposure of select scenes may reduce show freshness.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 3 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">3</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Free Ad-Supported Tier (AVOD)</div>
+        <div class="sol-type">P1 — Affordability</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Introduce a free, ad-supported tier to attract price-sensitive users like Arjun and Liam in markets like India, LATAM, and Southeast Asia.</p>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Offer limited content with ads, with upsell prompts to premium plans. Optimize ad tech for minimal disruption. Inspired by YouTube and JioCinema's freemium models.</p>
+          <br><h4>Market Sizing</h4>
+          <div class="market-stats">
+            <div class="stat-box"><div class="stat-num">600M</div><div class="stat-label">Smartphone users in India</div></div>
+            <div class="stat-box"><div class="stat-num">80%</div><div class="stat-label">Consuming short videos weekly</div></div>
+            <div class="stat-box"><div class="stat-num">~120M</div><div class="stat-label">Target AVOD reach (25% segment)</div></div>
+            <div class="stat-box"><div class="stat-num">~6M</div><div class="stat-label">New subscribers at 5% conversion</div></div>
+          </div>
+          <h4 style="margin-top:16px;">Competitive Benchmark</h4>
+          <p>Platforms like JioCinema saw &gt;50% user growth during major events (e.g., IPL), driven by their free, ad-supported model. YouTube, with its free content and ad monetization, maintains the highest global watch time per user.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Cannibalization</strong> — Potential downgrade of paying users to free tier.</li>
+            <li><strong>Content Licensing</strong> — Rights for AVOD distribution may differ from SVOD.</li>
+            <li><strong>Ad Inventory &amp; Quality</strong> — Requires robust ad tech and user experience safeguards to prevent ad fatigue.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 4 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">4</div>
+      <div class="solution-header-text">
+        <div class="sol-title">AI-Based Recap Generator (Custom-Length)</div>
+        <div class="sol-type">P2 — Retention</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Provide AI-generated recaps of previous seasons or episodes, tailored to user preferences (e.g., 1-min or 5-min versions), to reduce drop-off before new seasons.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+        <div class="yt-player-container" id="yt-Zim-boOfKvY">
+          <div class="yt-thumb-click" onclick="playYT('Zim-boOfKvY')">
+            <img src="https://img.youtube.com/vi/Zim-boOfKvY/hqdefault.jpg" alt="AI-Based Recap Generator (Custom-Length) — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=Zim-boOfKvY" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">AI-Based Recap Generator (Custom-Length)</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Use ML and LLM to summarize key plot points, integrated into the UI before a new season starts. Increases retention by helping users like Emma resume shows, drives watch time. Similar to YouTube fan-made recaps but automated and official.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Tone &amp; Emotion Loss</strong> — Automated recaps may fail to capture emotional nuance.</li>
+            <li><strong>Language &amp; Localization</strong> — Generating recaps in multiple languages while preserving context is complex.</li>
+            <li><strong>Licensing &amp; Talent Approvals</strong> — Use of character voices or scenes might require additional legal or actor approvals.</li>
+            <li><strong>User Experience Clutter</strong> — Poor placement or overuse could disrupt the app's clean UI.</li>
+            <li><strong>Technical Complexity</strong> — Requires reliable scene segmentation, summarization models, and scalable deployment.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 5 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">5</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Advanced Compression Algorithms for Content Delivery</div>
+        <div class="sol-type">P2 — Streaming Quality</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Use advanced video compression algorithms to optimize streaming quality for low-bandwidth users, offering a 360p mobile-optimized mode for seamless viewing.</p>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Adopt codecs like AV1 or VVC (Versatile Video Coding) to reduce data usage while maintaining visual clarity. Introduce a "Mobile-Optimized" 360p mode for users like Arjun in rural areas with unstable networks, with options to toggle quality settings. Use ML to predict network conditions and auto-adjust resolution.</p>
+          <br><p><strong>Impact:</strong> Improves streaming quality for price-sensitive, mobile-only users like Arjun, reduces buffering, and increases session duration in markets like India and SEA.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: YouTube's low-data mode for mobile users.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Implementation Complexity</strong> — Requires significant backend upgrades and testing across devices and regions.</li>
+            <li><strong>Quality Trade-offs</strong> — Aggressive compression may reduce visual fidelity, impacting user satisfaction.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 6 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">6</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Enhanced Parental Controls with Mobile Approval Lock</div>
+        <div class="sol-type">P3 — Family Features</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Introduce advanced parental controls, including a mobile approval lock for adult or sensitive content, requiring authorization from the primary account holder's device.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+                <div class="yt-player-container" id="yt-AMO3e1gpaNQ">
+          <div class="yt-thumb-click" onclick="playYT('AMO3e1gpaNQ')">
+            <img src="https://img.youtube.com/vi/AMO3e1gpaNQ/hqdefault.jpg" alt="Enhanced Parental Controls with Mobile Approval Lock — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=AMO3e1gpaNQ" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">Enhanced Parental Controls with Mobile Approval Lock</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Add a feature where adult-rated content (e.g., TV-MA) or sensitive genres on all profiles requires a one-time approval via push notification to the primary account holder's mobile device (e.g. Sofia's phone). Include options for time-based restrictions, content category blocks, and a "Family Hub" with curated, kid-safe content in multiple languages.</p>
+          <br><p><strong>Impact:</strong> Addresses Sofia's need for robust parental controls, increases family retention, and builds trust in multi-user households.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: Disney+'s kid-safe profiles combined with two-factor authentication-like approval.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>User Friction</strong> — Frequent approval requests may frustrate parents or lead to feature abandonment.</li>
+            <li><strong>Bypass Risk</strong> — Tech-savvy kids may find ways to switch profiles or spoof devices without proper enforcement.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 7 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">7</div>
+      <div class="solution-header-text">
+        <div class="sol-title">AI-Powered Auto-Dubbing for Contextual Transcreation</div>
+        <div class="sol-type">P3 — Localization</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Use AI to generate contextually accurate auto-dubbing for all content, ensuring cultural and linguistic resonance across languages (Transcreation of Content — Translational Recreation).</p>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Leverage NLP, voice synthesis, and LLMs to create dubs that adapt idioms, humour, and cultural references (e.g. translating Squid Game slang for LATAM audiences). Use ML to match voice tones to original actors and ensure lip-sync accuracy. Offer users like Sofia and Priya a toggle for dubbed vs. subtitled content, with regional language prioritization.</p>
+          <br><p><strong>Impact:</strong> Enhances localization for Sofia and Priya, improves accessibility, and drives engagement in non-English markets like LATAM, India, and Southeast Asia.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: Disney Hotstar's regional dubbing for Indian languages, but automated and scalable.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Quality Assurance</strong> — Poor dubbing can alienate users.</li>
+            <li><strong>Cultural Nuance</strong> — Literal translations may miss cultural humour or idioms.</li>
+            <li><strong>Licensing Barriers</strong> — Dubbed rights may need separate licensing in some regions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 8 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">8</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Netflix Passport for Native Content Access</div>
+        <div class="sol-type">P4 — Geo-Restrictions</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Introduce a "Netflix Passport" feature allowing native users (e.g., Indians in the UK) to access their home country's content library, bypassing geo-restrictions.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+                <div class="yt-player-container" id="yt-pq0l367JZb8">
+          <div class="yt-thumb-click" onclick="playYT('pq0l367JZb8')">
+            <img src="https://img.youtube.com/vi/pq0l367JZb8/hqdefault.jpg" alt="Netflix Passport for Native Content Access — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=pq0l367JZb8" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">Netflix Passport for Native Content Access</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Offer a premium add-on or loyalty perk where users like Priya can verify their native country (e.g., via account history or ID) to access Indian content while in the UK. Use a hybrid licensing model to negotiate limited cross-border access for select titles. Integrate with the UI as a "Home Country" tab in the content library.</p>
+          <br><p><strong>Impact:</strong> Addresses Priya's geo-restriction frustrations, increases retention among expat communities, and creates a premium upsell opportunity.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: BBC iPlayer's limited international access for UK citizens, but tailored for streaming.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Legal &amp; Licensing</strong> — Cross-border streaming rights are complex.</li>
+            <li><strong>Abuse Prevention</strong> — System could be misused for unauthorized access.</li>
+            <li><strong>Operational Complexity</strong> — Verifying "native" identity while maintaining UX fluidity.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 9 -->
+  <div class="solution-block">
+    <div class="solution-header">
+      <div class="solution-num">9</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Auto-Add Completed Shows for Tracking and Recommendations</div>
+        <div class="sol-type">Retention Enhancement</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Automatically add shows to a user's "My List" for tracking and recommendations when new seasons are released, if the user has completed a previous season.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+        <div class="yt-player-container" id="yt-GBTuwjbSp7U">
+          <div class="yt-thumb-click" onclick="playYT('GBTuwjbSp7U')">
+            <img src="https://img.youtube.com/vi/GBTuwjbSp7U/hqdefault.jpg" alt="Auto-Add Completed Shows for Tracking and Recommendations — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=GBTuwjbSp7U" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">Auto-Add Completed Shows for Tracking and Recommendations</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Implement an algorithm that detects when a user has watched all episodes of a season (e.g., Emma finishing Stranger Things Season 1). The system auto-adds the show to "My List" and sends notifications when Season 2 is in production or released. Integrate with the recommendation engine to suggest similar content during the wait.</p>
+          <br><p><strong>Impact:</strong> Increases retention by keeping users like Emma engaged with shows they love, reduces drop-off between seasons, and enhances personalization.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: Similar to Spotify's "Release Radar" for music, but for TV show seasons.</p>
+        </div>
+        <div class="sol-block" style="display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;opacity:0.3;">
+            <div style="font-family:var(--font-display);font-size:64px;color:var(--red);">🔔</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:8px;">Smart Season Alerts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution 10 -->
+  <div class="solution-block" style="border-color:rgba(245,166,35,0.3);">
+    <div class="solution-header" style="background:rgba(245,166,35,0.08);border-bottom-color:rgba(245,166,35,0.2);">
+      <div class="solution-num" style="color:rgba(245,166,35,0.3);">10</div>
+      <div class="solution-header-text">
+        <div class="sol-title">Shop the Scene — Interactive Commerce</div>
+        <div class="sol-type" style="color:var(--accent);">Other Monetisation Suggestion</div>
+      </div>
+    </div>
+    <div class="solution-body">
+      <p class="sol-idea">💡 <strong>Idea:</strong> Enable users to buy show-inspired merchandise (e.g., clothing, collectibles) directly from key scenes via interactive overlays in the Netflix app, capitalizing on iconic moments like Eleven's outfit in Stranger Things.</p>
+      <div class="yt-thumb-wrap">
+        <div class="yt-thumb-label">Prototype Demo</div>
+                <div class="yt-player-container" id="yt-2YsJMGtAhf4">
+          <div class="yt-thumb-click" onclick="playYT('2YsJMGtAhf4')">
+            <img src="https://img.youtube.com/vi/2YsJMGtAhf4/hqdefault.jpg" alt="Shop the Scene Interactive Commerce — Prototype Demo" />
+            <div class="yt-play-overlay">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);font-family:var(--font-body);font-weight:600;">Watch on YouTube</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="yt-thumb-caption">
+          <a class="yt-yt-link" href="https://www.youtube.com/watch?v=2YsJMGtAhf4" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.75 12.38 12.38 0 0 0-8.45 2.78 13.1 13.1 0 0 0-4.1 9.06 12.93 12.93 0 0 0 .27 2.67 4.83 4.83 0 0 1 3.77 2.75 12.38 12.38 0 0 0 8.45-2.78 13.1 13.1 0 0 0 4.1-9.06 12.93 12.93 0 0 0-.27-2.67zM10 15V9l5 3-5 3z"/></svg>
+            Watch on YouTube
+          </a>
+          <span>·</span><span style="color:var(--muted)">Shop the Scene Interactive Commerce</span>
+        </div>
+      </div>
+      <div class="sol-grid">
+        <div class="sol-block">
+          <h4>How It Works</h4>
+          <p>Integrate shoppable hotspots in select scenes, activated by a "Shop this Scene" toggle. Clicking opens a pop-up with curated products, prices, and "Buy Now" links to a Netflix e-commerce store or partners like Amazon. Use AI to select high-engagement scenes and personalize product recommendations.</p>
+          <br><p><strong>Impact:</strong> Attracts fans like Emma and Priya with unique merch, boosting user acquisition. Enhances retention for Sofia by engaging families with kid-friendly items, while generating revenue through sales.</p>
+          <br><p style="font-size:12px;color:var(--muted);font-style:italic;">Example: Disney+'s Star Wars merch integration.</p>
+        </div>
+        <div class="sol-block">
+          <h4>Risks &amp; Challenges</h4>
+          <ul class="risk-list">
+            <li><strong>Viewer Distraction</strong> — Interrupting storytelling with commerce may reduce immersion or frustrate users who prefer uninterrupted viewing.</li>
+            <li><strong>Licensing &amp; Partnerships</strong> — Securing merchandising rights for shows (especially third-party IP) and managing e-commerce logistics can be complex and resource-intensive.</li>
+            <li><strong>Adverse Perception</strong> — May trigger backlash if users perceive it as overly commercial or intrusive, especially in emotionally significant scenes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOLUTION PRIORITIZATION ─── -->
+<section class="section" id="sol-priority">
+  <div class="section-tag">Slide 24</div>
+  <h2 class="section-title">Solution Prioritization</h2>
+  <div class="sol-priority-note">
+    The solutions are prioritized using the <strong style="color:var(--white);">Value/Impact and Effort framework</strong> to align with Netflix's goals of enhancing user engagement and driving subscriber growth. The table below evaluates each solution's impact and effort, ensuring focus on content discovery, affordability, retention, and accessibility in a competitive streaming landscape.
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Problem Priority</th><th>Solution</th><th>Value/Impact</th><th>Effort</th><th>Solution Priority</th><th>Remarks</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-red">P0</span></td><td><strong style="color:var(--white)">AI-Powered Chatbot for Content Discovery</strong></td><td>+20% watch time for 70% of users (210M)</td><td>Medium (12–14 weeks)</td><td><span class="badge" style="background:rgba(229,9,20,0.2);color:#ff9090;border-color:rgba(229,9,20,0.4)">S0</span></td><td>Reduces choice overload for Emma and Priya, scalable via NLP &amp; LLM.</td></tr>
+        <tr><td><span class="badge badge-red">P0, P1</span></td><td><strong style="color:var(--white)">Scene-Based Shorts Creator Program</strong></td><td>+5% acquisition for 20% in key markets (60M)</td><td>High (12–16 weeks)</td><td><span class="badge badge-orange">S1</span></td><td>Drives viral discovery for Arjun, Emma, Liam, high partnership costs.</td></tr>
+        <tr><td><span class="badge badge-orange">P1</span></td><td><strong style="color:var(--white)">Free Ad-Supported Tier (AVOD)</strong></td><td>+15% acquisition for 40% in price-sensitive markets (120M)</td><td>Medium (12–16 weeks)</td><td><span class="badge badge-orange">S2</span></td><td>Unlocks users like Arjun and Liam, but requires additional ad tech investment.</td></tr>
+        <tr><td><span class="badge badge-blue">P2</span></td><td><strong style="color:var(--white)">AI-Based Recap Generator</strong></td><td>+10% retention for 20% of binge-watchers (60M)</td><td>Medium (6–8 weeks)</td><td><span class="badge badge-blue">S3</span></td><td>Improves retention for Emma with moderate LLM &amp; ML effort.</td></tr>
+        <tr><td><span class="badge badge-blue">P2</span></td><td><strong style="color:var(--white)">Advanced Compression Algorithms</strong></td><td>+10% session duration for 10-15% of mobile users (30M-45M)</td><td>Medium (8–10 weeks)</td><td><span class="badge badge-blue">S4</span></td><td>Enhances streaming for Arjun, moderate technical complexity.</td></tr>
+        <tr><td><span class="badge badge-green">P3</span></td><td><strong style="color:var(--white)">Enhanced Parental Controls with Mobile Approval Lock</strong></td><td>+10% retention for 30% of families (90M)</td><td>Medium (9–10 weeks)</td><td><span class="badge badge-green">S5</span></td><td>Boosts family experience for Sofia, niche but valuable.</td></tr>
+        <tr><td><span class="badge badge-green">P3</span></td><td><strong style="color:var(--white)">AI-Powered Auto-Dubbing for Contextual Transcreation</strong></td><td>+10% engagement for 20% in non-English markets (60M)</td><td>High (10–12 weeks)</td><td><span class="badge badge-green">S6</span></td><td>Improves localization for Sofia and Priya, high development cost.</td></tr>
+        <tr><td><span class="badge" style="background:rgba(128,128,128,0.15);color:#aaa;border-color:rgba(128,128,128,0.3)">P4</span></td><td><strong style="color:var(--white)">Netflix Passport for Native Content Access</strong></td><td>+5% retention for 10% of expats (30M)</td><td>High (12–16 weeks)</td><td><span class="badge" style="background:rgba(128,128,128,0.12);color:#999;border-color:rgba(128,128,128,0.25)">S7</span></td><td>Addresses Priya's geo-restrictions, complex licensing.</td></tr>
+        <tr><td>—</td><td><strong style="color:var(--white)">Shop the Scene Interactive Commerce</strong></td><td>+5% engagement, revenue for 20% of users (60M)</td><td>High (10–12 weeks)</td><td><span class="badge" style="background:rgba(128,128,128,0.12);color:#999;border-color:rgba(128,128,128,0.25)">S8</span></td><td>Boosts fan engagement for Emma and Priya, limited scale.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── METRICS ─── -->
+<section class="section" id="metrics">
+  <div class="section-tag">Slide 25</div>
+  <h2 class="section-title">Metrics</h2>
+  <p style="color:var(--muted);max-width:760px;margin-bottom:32px;">To measure the success of these solutions in driving user engagement and subscriber growth, the following metrics will be tracked:</p>
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="m-title">📊 User Engagement</div><p>Monitor Daily Active Users (DAU), session duration, and titles watched per session to assess interaction frequency and depth.</p></div>
+    <div class="metric-card"><div class="m-title">🔁 User Retention</div><p>Track 30-day retention rate and churn rate to evaluate long-term engagement and loyalty.</p></div>
+    <div class="metric-card"><div class="m-title">⭐ Net Promoter Score (NPS)</div><p>Survey users to measure satisfaction and likelihood to recommend Netflix, reflecting overall user experience.</p></div>
+    <div class="metric-card"><div class="m-title">🔍 Content Discovery Success</div><p>Measure click-through rates on recommendations, chatbot interactions, and search-to-watch conversion to gauge discovery improvements.</p></div>
+    <div class="metric-card"><div class="m-title">💰 Conversion Rate</div><p>Track free-to-paid conversions for AVOD users and new subscriber sign-ups to assess acquisition effectiveness.</p></div>
+    <div class="metric-card"><div class="m-title">🏁 Competitive Benchmarking</div><p>Compare Netflix's engagement metrics (e.g., watch time, churn) with Disney+, Amazon Prime, and JioCinema to evaluate market position.</p></div>
+  </div>
+
+  <hr class="divider">
+
+  <h3 style="font-family:var(--font-display);font-size:28px;color:var(--white);margin-bottom:24px;">Appendix — Legend</h3>
+  <div class="appendix-grids">
+    <div class="legend-group">
+      <h4>Impact &amp; Effort</h4>
+      <div class="legend-item"><div class="legend-dot" style="background:#4caf50;"></div><span>High</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent);"></div><span>Medium</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#888;"></div><span>Low</span></div>
+    </div>
+    <div class="legend-group">
+      <h4>Problem Priority</h4>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red);"></div><span>P0 — Highest</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent);"></div><span>P1 — High</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#90b8ff;"></div><span>P2 — Medium</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#80d0a0;"></div><span>P3 — Low</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#888;"></div><span>P4 — Lowest</span></div>
+    </div>
+    <div class="legend-group">
+      <h4>Solution Priority</h4>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red);"></div><span>S0 — Critical</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff8c00;"></div><span>S1 — Very High</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent);"></div><span>S2 — High</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#90b8ff;"></div><span>S3 — Medium</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#80d0a0;"></div><span>S4 — Niche / Low-Medium</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6aaa80;"></div><span>S5 — Niche / Low</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#888;"></div><span>S6 — Optional · Complex</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#666;"></div><span>S7 — Optional · Complex</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#444;"></div><span>S8 — Experimental</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="f-brand">NETFLIX</div>
+  <div class="f-credit">Product Strategy Case Study<br>by Vivaswan</div>
+</footer>
+
+<script>
+  // Exact embed URLs from YouTube Studio (with si tokens)
+  var YT_EMBEDS = {
+    'NjYPEsOj7tw': 'https://www.youtube.com/embed/NjYPEsOj7tw?si=bKQBtg7PeJnN47de',
+    'GBTuwjbSp7U': 'https://www.youtube.com/embed/GBTuwjbSp7U?si=i4kRgKNPiBjZa9hd',
+    'pq0l367JZb8': 'https://www.youtube.com/embed/pq0l367JZb8?si=SxCUkzJhXjKbEuvQ',
+    'AMO3e1gpaNQ': 'https://www.youtube.com/embed/AMO3e1gpaNQ?si=eTJO-Y3sAUgGfs7s',
+    'Zim-boOfKvY': 'https://www.youtube.com/embed/Zim-boOfKvY?si=F4W1nws9s5KpPQ_w',
+    'tFKUpxmk9P0': 'https://www.youtube.com/embed/tFKUpxmk9P0?si=g6V-wbYrkpSxMgLO',
+    '2YsJMGtAhf4': 'https://www.youtube.com/embed/2YsJMGtAhf4'
+  };
+
+  function playYT(videoId) {
+    window.open('https://www.youtube.com/watch?v=' + videoId, '_blank', 'noopener,noreferrer');
+  }
+</script>
+</body>
+</html>
