@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vivaswan Vrihaspati — Product Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiNGNkYxRTkiLz4KICA8Y2xpcFBhdGggaWQ9ImMiPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjEyIi8+PC9jbGlwUGF0aD4KICA8cG9seWdvbiBwb2ludHM9IjAsMCA2NCwwIDY0LDY0IiBmaWxsPSIjQjg0QzE4IiBjbGlwLXBhdGg9InVybCgjYykiLz4KICA8dGV4dCB4PSIyMiIgeT0iNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iOTAwIiBmb250LXN0eWxlPSJpdGFsaWMiIGZpbGw9IiMxQTE3MzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlY8L3RleHQ+CiAgPHRleHQgeD0iNDgiIHk9IjQ4IiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI0MCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zdHlsZT0iaXRhbGljIiBmaWxsPSIjRjZGMUU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5WPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiNGNkYxRTkiLz4KICA8Y2xpcFBhdGggaWQ9ImMiPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjEyIi8+PC9jbGlwUGF0aD4KICA8cG9seWdvbiBwb2ludHM9IjAsMCA2NCwwIDY0LDY0IiBmaWxsPSIjQjg0QzE4IiBjbGlwLXBhdGg9InVybCgjYykiLz4KICA8dGV4dCB4PSIyMiIgeT0iNjAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iOTAwIiBmb250LXN0eWxlPSJpdGFsaWMiIGZpbGw9IiMxQTE3MzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlY8L3RleHQ+CiAgPHRleHQgeD0iNDgiIHk9IjQ4IiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI0MCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zdHlsZT0iaXRhbGljIiBmaWxsPSIjRjZGMUU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5WPC90ZXh0Pgo8L3N2Zz4="/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<!-- Formspree endpoint: https://formspree.io/f/xykowzgo — live and wired via Ajax SDK below -->
+
+<style>
+:root{
+  --bg:#F6F1E9;
+  --bg2:#EDE6D8;
+  --bg3:#E4DBCA;
+  --bg4:#D8CDBA;
+  --gold:#B84C18;
+  --gold2:#D97035;
+  --gold3:rgba(184,76,24,.11);
+  --gold4:rgba(184,76,24,.2);
+  --cream:#1A1730;
+  --muted:rgba(26,23,48,.52);
+  --faint:rgba(26,23,48,.15);
+  --teal:#16756C;
+  --rose:#B83A2E;
+  --disp:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--cream);
+  font-family:var(--sans);font-size:15px;line-height:1.7;
+  overflow-x:hidden;cursor:none;
+}
+
+/* ─ Cursor ─ */
+#cur,#cur2{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+#cur{width:9px;height:9px;background:var(--gold);}
+#cur2{width:36px;height:36px;border:1px solid rgba(184,76,24,.5);transition:transform .1s ease,width .3s,height .3s;}
+
+/* ─ Grain ─ */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9997;opacity:.018;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0/256px;
+}
+
+/* ─ NAV ─ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:600;
+  height:70px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;
+  background:rgba(246,241,233,.88);backdrop-filter:blur(22px) saturate(1.5);
+  border-bottom:1px solid rgba(184,76,24,.1);
+}
+nav.up{background:rgba(246,241,233,.97);border-bottom-color:rgba(184,76,24,.18);}
+.logo{
+  font-family:var(--disp);font-size:27px;font-weight:900;
+  color:var(--cream);cursor:pointer;text-decoration:none;
+  display:flex;align-items:center;
+}
+.logo .g{color:var(--gold);}
+.links{display:flex;gap:44px;list-style:none;}
+.links a{
+  font-size:11.5px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+  text-decoration:none;cursor:pointer;
+  position:relative;padding-bottom:3px;transition:color .2s;
+}
+.links a::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.links a:hover,.links a.on{color:var(--gold);}
+.links a:hover::after,.links a.on::after{transform:scaleX(1);}
+
+/* ─ Page ─ */
+.pg{display:none;min-height:100vh;padding-top:70px;}
+.pg.on{display:block;animation:up .55s cubic-bezier(.22,1,.36,1) both;}
+@keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════ HOME ══════ */
+
+/* Hero */
+.hero{
+  position:relative;min-height:calc(100vh - 70px);
+  display:grid;grid-template-columns:58% 42%;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 90% at 88% 50%,rgba(184,76,24,.09) 0%,transparent 65%),
+    radial-gradient(ellipse 55% 65% at 10% 25%,rgba(22,117,108,.05) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 50% at 55% 95%,rgba(232,133,106,.07) 0%,transparent 58%);
+}
+
+.hl{
+  padding:88px 64px 88px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:1;
+}
+.hl>*{opacity:0;animation:su .65s cubic-bezier(.22,1,.36,1) forwards;}
+.d1{animation-delay:.08s;}.d2{animation-delay:.18s;}.d3{animation-delay:.28s;}
+.d4{animation-delay:.38s;}.d5{animation-delay:.48s;}
+@keyframes su{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+
+.brow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:28px;
+}
+.bl{width:30px;height:1px;background:var(--gold);}
+
+.hn{
+  font-family:var(--disp);font-size:clamp(64px,8.8vw,108px);
+  font-weight:900;line-height:.93;letter-spacing:-.025em;
+  margin-bottom:22px;
+}
+.hn .it{font-style:italic;color:var(--gold);}
+.hn .ot{-webkit-text-stroke:1.5px rgba(26,23,48,.25);color:transparent;}
+
+.hr{
+  font-family:var(--disp);font-size:clamp(15px,2vw,20px);
+  font-weight:400;font-style:italic;color:var(--muted);
+  margin-bottom:34px;
+}
+.hb{
+  font-size:14.5px;color:var(--muted);line-height:1.88;
+  max-width:470px;margin-bottom:46px;
+}
+.hb b{color:var(--cream);font-weight:500;}
+
+.ctas{display:flex;gap:14px;flex-wrap:wrap;}
+.b1,.b2{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--sans);font-size:11.5px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:15px 34px;cursor:pointer;border:none;
+  text-decoration:none;transition:all .25s;
+}
+.b1{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--bg);position:relative;overflow:hidden;
+}
+.b1::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.b1:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(184,76,24,.38);}
+.b1:hover::after{opacity:1;}
+.b2{background:transparent;color:var(--cream);border:1px solid rgba(26,23,48,.25);}
+.b2:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+
+/* Hero right */
+.hrr{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:88px 80px 88px 52px;
+  border-left:1px solid rgba(184,76,24,.1);
+  position:relative;z-index:1;
+}
+.sg{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:rgba(26,23,48,.1);
+  border:1px solid rgba(26,23,48,.12);
+  margin-bottom:42px;overflow:hidden;
+}
+.sc{
+  background:#FAF6EF;padding:28px 22px;
+  transition:background .25s;
+}
+.sc:hover{background:#F0E9DC;}
+.sn{
+  font-family:var(--disp);font-size:50px;font-weight:700;
+  color:var(--gold);line-height:1;margin-bottom:5px;
+}
+.sl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+
+.tc{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  background:rgba(184,76,24,.1);border:1px solid rgba(184,76,24,.18);
+  color:var(--gold2);font-size:11px;letter-spacing:.07em;
+  padding:5px 13px;font-weight:500;transition:all .2s;
+}
+.chip:hover{background:rgba(184,76,24,.2);border-color:var(--gold);}
+
+/* Ticker */
+.tick{
+  overflow:hidden;white-space:nowrap;
+  border-top:1px solid rgba(184,76,24,.1);
+  border-bottom:1px solid rgba(184,76,24,.1);
+  background:rgba(184,76,24,.04);padding:11px 0;
+}
+.ti{display:inline-block;animation:t 26s linear infinite;}
+.ti span{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(184,76,24,.55);margin:0 26px;font-weight:500;}
+@keyframes t{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* Sections */
+.sec{padding:104px 80px;border-top:1px solid rgba(26,23,48,.055);}
+.sec.alt{background:var(--bg2);}
+.sh{margin-bottom:72px;}
+.ey{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:16px;
+}
+.ey::before{content:'';width:22px;height:1px;background:var(--gold);}
+.st{font-family:var(--disp);font-size:clamp(38px,5.2vw,62px);font-weight:700;line-height:1.05;}
+.st em{font-style:italic;color:var(--gold);}
+.st .ot2{-webkit-text-stroke:1.5px rgba(26,23,48,.14);color:transparent;}
+
+/* Skills grid */
+.skgr{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(26,23,48,.08);}
+.skc{
+  background:#FAF6EF;padding:42px 36px;border:1px solid rgba(26,23,48,.06);
+  position:relative;overflow:hidden;transition:background .25s;
+}
+.skc::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:0;
+  background:linear-gradient(180deg,rgba(184,76,24,.1),transparent);
+  transition:height .35s;
+}
+.skc:hover{background:#F0E9DC;}
+.skc:hover::before{height:100%;}
+.skno{
+  font-family:var(--disp);font-size:64px;font-weight:900;
+  color:rgba(184,76,24,.07);line-height:1;
+  position:absolute;top:18px;right:24px;
+  transition:color .3s;
+}
+.skc:hover .skno{color:rgba(184,76,24,.14);}
+.skico{font-size:28px;margin-bottom:20px;}
+.sknm{font-family:var(--disp);font-size:21px;font-weight:700;margin-bottom:12px;}
+.sktx{font-size:13.5px;color:var(--muted);line-height:1.75;}
+
+/* Accent divider */
+.div-line{
+  display:flex;align-items:center;gap:16px;
+  margin:0 80px;
+  border-top:none;
+}
+.div-line::before,.div-line::after{content:'';flex:1;height:1px;background:rgba(26,23,48,.06);}
+.div-line span{
+  font-family:var(--disp);font-size:18px;color:rgba(184,76,24,.3);
+}
+
+/* Experience */
+.expr{
+  display:grid;grid-template-columns:230px 1fr;
+  padding:54px 0;border-bottom:1px solid rgba(26,23,48,.06);
+  gap:52px;
+}
+.expr:first-child{border-top:1px solid rgba(26,23,48,.06);}
+.ep{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.eco{font-size:12.5px;color:var(--gold);font-weight:600;margin-bottom:4px;letter-spacing:.03em;}
+.ebadge{
+  display:inline-block;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 9px;font-weight:700;
+  background:rgba(184,76,24,.12);border:1px solid rgba(184,76,24,.22);color:var(--gold);
+  margin-top:8px;
+}
+.erl{font-family:var(--disp);font-size:28px;font-weight:700;margin-bottom:22px;line-height:1.15;}
+.ebul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.ebul li{
+  font-size:13.5px;color:var(--muted);padding-left:22px;
+  position:relative;line-height:1.8;
+}
+.ebul li::before{
+  content:'▸';position:absolute;left:0;color:var(--gold);font-size:11px;top:3px;
+}
+.ebul li b{color:var(--cream);font-weight:500;}
+
+/* Tools */
+.tgr{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(26,23,48,.08);}
+.tc2{background:#FAF6EF;padding:38px 34px;transition:background .25s;border:1px solid rgba(26,23,48,.06);}
+.tc2:hover{background:#F0E9DC;}
+
+/* ══════ CASE STUDIES ══════ */
+.csh{
+  padding:96px 80px 72px;background:var(--bg3);
+  border-bottom:1px solid rgba(184,76,24,.12);
+  position:relative;overflow:hidden;
+}
+.csh::after{
+  content:'WORK';font-family:var(--disp);font-size:210px;font-weight:900;
+  color:rgba(184,76,24,.035);
+  position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+  letter-spacing:-.04em;pointer-events:none;line-height:1;
+  -webkit-text-stroke:1px rgba(184,76,24,.05);
+}
+
+.csgr{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(26,23,48,.08);}
+.csc{
+  background:#FAF6EF;padding:54px 50px;
+  cursor:pointer;transition:background .25s;
+  position:relative;overflow:hidden;min-height:340px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.csc::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),var(--teal));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.csc:hover{background:#F0E9DC;}
+.csc:hover::after{transform:scaleX(1);}
+.csc.dim{opacity:.38;cursor:default;}
+.csc.dim:hover{background:#FAF6EF;}
+.csc.dim::after{display:none;}
+
+.csn{
+  font-family:var(--disp);font-size:90px;font-weight:900;
+  color:rgba(26,23,48,.04);line-height:1;margin-bottom:18px;
+  transition:color .25s;
+}
+.csc:hover .csn{color:rgba(184,76,24,.1);}
+.cstag{
+  display:inline-block;
+  background:rgba(184,76,24,.1);border:1px solid rgba(184,76,24,.2);
+  color:var(--gold2);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;padding:4px 12px;font-weight:700;margin-bottom:14px;
+}
+.csnm{font-family:var(--disp);font-size:25px;font-weight:700;line-height:1.25;margin-bottom:12px;}
+.csbl{font-size:13px;color:var(--muted);line-height:1.7;}
+.csft{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:28px;padding-top:20px;border-top:1px solid rgba(26,23,48,.06);
+}
+.cskpi{font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.04em;}
+.csar{color:var(--gold);font-size:22px;transition:transform .2s;}
+.csc:hover .csar{transform:translateX(8px);}
+
+/* ══════ CONTACT ══════ */
+.cw{display:grid;grid-template-columns:40% 60%;min-height:calc(100vh - 70px);}
+.cl{
+  background:var(--bg3);padding:84px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-right:1px solid rgba(184,76,24,.1);
+  position:relative;overflow:hidden;
+}
+.cl::before{
+  content:'';position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(184,76,24,.07),transparent 68%);
+  bottom:-160px;right:-120px;pointer-events:none;
+}
+.cdet{display:flex;flex-direction:column;gap:30px;margin-top:46px;}
+.cdl{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px;}
+.cdv{font-size:15px;color:var(--cream);}
+.cdv a{color:var(--cream);text-decoration:none;transition:color .2s;}
+.cdv a:hover{color:var(--gold);}
+.avail{
+  margin-top:52px;padding:18px 22px;
+  background:rgba(22,117,108,.08);border:1px solid rgba(22,117,108,.22);
+  display:flex;align-items:center;gap:12px;
+}
+.adot{
+  width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;
+  box-shadow:0 0 10px rgba(22,117,108,.5);animation:bl 2.2s infinite;
+}
+@keyframes bl{0%,100%{opacity:1;}55%{opacity:.25;}}
+.at{font-size:12px;color:#16756C;font-weight:500;letter-spacing:.04em;}
+
+.cr{
+  padding:84px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  background:var(--bg2);
+}
+.fh{font-family:var(--disp);font-size:clamp(34px,4vw,52px);font-weight:700;line-height:1.1;margin-bottom:10px;}
+.fh em{font-style:italic;color:var(--gold);}
+.fs{font-size:14px;color:var(--muted);margin-bottom:44px;}
+
+/* Form */
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.fg{margin-bottom:18px;}
+.fl{display:block;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:8px;}
+.fi,.ft{
+  width:100%;background:#FBF8F3;
+  border:1px solid rgba(26,23,48,.1);
+  color:var(--cream);font-family:var(--sans);font-size:14px;
+  padding:14px 18px;outline:none;resize:none;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.fi:focus,.ft:focus{
+  border-color:var(--gold);
+  background:rgba(184,76,24,.04);
+  box-shadow:0 0 0 3px rgba(184,76,24,.09);
+}
+.fi::placeholder,.ft::placeholder{color:rgba(26,23,48,.2);}
+.ft{min-height:130px;}
+.hp{display:none!important;}
+.fsb{
+  width:100%;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+  color:var(--bg);border:none;
+  font-family:var(--sans);font-size:12px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:18px;cursor:pointer;margin-top:8px;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.fsb::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.22),transparent);
+  opacity:0;transition:opacity .25s;
+}
+.fsb:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(184,76,24,.4);}
+.fsb:hover::after{opacity:1;}
+.fnote{font-size:11.5px;color:rgba(26,23,48,.22);margin-top:14px;text-align:center;letter-spacing:.03em;}
+.ty{
+  display:none;margin-top:22px;padding:20px 24px;
+  background:rgba(22,117,108,.08);border:1px solid rgba(22,117,108,.22);
+  color:var(--teal);font-size:14px;
+}
+
+/* Footer */
+footer{
+  padding:26px 80px;background:var(--bg2);
+  border-top:1px solid rgba(26,23,48,.055);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.fc{font-size:12px;color:rgba(26,23,48,.55);letter-spacing:.04em;}
+.fl2{display:flex;gap:28px;}
+.fl2 a{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(26,23,48,.45);text-decoration:none;transition:color .2s;cursor:pointer;
+}
+.fl2 a:hover{color:var(--gold);}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg3);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+@media(max-width:960px){
+  nav{padding:0 24px;}
+  .hero{grid-template-columns:1fr;}
+  .hl{padding:56px 28px;}
+  .hrr{padding:48px 28px;border-left:none;border-top:1px solid rgba(184,76,24,.1);}
+  .sec{padding:68px 28px;}
+  .skgr,.tgr{grid-template-columns:1fr;}
+  .expr{grid-template-columns:1fr;gap:14px;}
+  .csh{padding:60px 28px 48px;}
+  .csgr{grid-template-columns:1fr;}
+  .csc{padding:44px 32px;}
+  .cw{grid-template-columns:1fr;}
+  .cl,.cr{padding:56px 28px;}
+  .fr2{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:10px;text-align:center;padding:22px 24px;}
+  .div-line{margin:0 28px;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<nav id="nv">
+  <a class="logo" onclick="go('home')" style="display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;">
+    <svg width="48" height="48" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="12" fill="#F6F1E9"/>
+      <clipPath id="nc"><rect width="64" height="64" rx="12"/></clipPath>
+      <polygon points="0,0 64,0 64,64" fill="#B84C18" clip-path="url(#nc)"/>
+      <text x="22" y="60" font-family="Georgia,serif" font-size="56" font-weight="900" font-style="italic" fill="#1A1730" text-anchor="middle">V</text>
+      <text x="48" y="48" font-family="Georgia,serif" font-size="40" font-weight="900" font-style="italic" fill="#F6F1E9" text-anchor="middle">V</text>
+    </svg>
+  </a>
+  <ul class="links">
+    <li><a onclick="go('home')" id="n-home" class="on">Home</a></li>
+    <li><a onclick="go('case-studies')" id="n-case-studies">Case Studies</a></li>
+    <li><a onclick="go('contact')" id="n-contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════ HOME ══════════════════ -->
+<div id="page-home" class="pg on">
+
+  <section class="hero">
+    <div class="hl">
+      <div class="brow d1"><span class="bl"></span>Senior Product Manager</div>
+      <h1 class="hn d2"><span class="ot">Viva</span><span class="it">swan</span></h1>
+      <p class="d2" style="font-family:var(--disp);font-size:clamp(22px,3vw,38px);font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:-4px;margin-bottom:20px;">Vrihaspati</p>
+      <p class="hr d3">Discovery · Personalisation · Growth</p>
+      <p class="hb d4">
+        Product lead specialising in <b>discovery, search & personalisation platforms</b>, with a proven track record of owning measurable outcomes. Experienced across <b>US, Europe & India</b> — translating VoC insights into hypothesis-driven experimentation that actually moves the needle.
+      </p>
+      <div class="ctas d5">
+        <button class="b1" onclick="go('case-studies')">View Case Studies ↗</button>
+        <button class="b2" onclick="go('contact')">Get in Touch</button>
+      </div>
+    </div>
+
+    <div class="hrr">
+      <div class="sg">
+        <div class="sc"><div class="sn" data-to="6" data-sx="+">0</div><div class="sl">Years in<br>Product</div></div>
+        <div class="sc"><div class="sn" data-to="34" data-sx="%">0</div><div class="sl">AOV Uplift<br>Delivered</div></div>
+        <div class="sc"><div class="sn" data-to="81" data-sx="%">0</div><div class="sl">Discovery<br>Success Rate</div></div>
+        <div class="sc"><div class="sn" data-to="3" data-sx="×">0</div><div class="sl">Experiment<br>Velocity</div></div>
+      </div>
+      <div class="tc">
+        <span class="chip">Discovery Platforms</span>
+        <span class="chip">Personalisation</span>
+        <span class="chip">Product-Led Growth</span>
+        <span class="chip">Ranking Systems</span>
+        <span class="chip">0→1 Products</span>
+        <span class="chip">A/B Experimentation</span>
+        <span class="chip">ML Workflows</span>
+        <span class="chip">Lifecycle Growth</span>
+        <span class="chip">GenAI Scoping</span>
+        <span class="chip">Marketplace Strategy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="tick">
+    <div class="ti">
+      <span>Discovery Platforms</span><span>◆</span><span>Search Relevance</span><span>◆</span>
+      <span>Personalisation Strategy</span><span>◆</span><span>Hypothesis-Driven Experimentation</span><span>◆</span>
+      <span>Product-Led Growth</span><span>◆</span><span>Cohort Analysis</span><span>◆</span>
+      <span>Lifecycle Management</span><span>◆</span><span>Ranking Systems</span><span>◆</span>
+      <span>GenAI Scoping</span><span>◆</span><span>VoC Synthesis</span><span>◆</span>
+      <!-- duplicate for seamless loop -->
+      <span>Discovery Platforms</span><span>◆</span><span>Search Relevance</span><span>◆</span>
+      <span>Personalisation Strategy</span><span>◆</span><span>Hypothesis-Driven Experimentation</span><span>◆</span>
+      <span>Product-Led Growth</span><span>◆</span><span>Cohort Analysis</span><span>◆</span>
+      <span>Lifecycle Management</span><span>◆</span><span>Ranking Systems</span><span>◆</span>
+      <span>GenAI Scoping</span><span>◆</span><span>VoC Synthesis</span><span>◆</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <section class="sec">
+    <div class="sh">
+      <div class="ey">Core Capabilities</div>
+      <h2 class="st">What I <em>bring</em><br><span class="ot2">to the table</span></h2>
+    </div>
+    <div class="skgr">
+      <div class="skc"><div class="skno">01</div><div class="skico">📊</div><div class="sknm">Data-Driven Strategy</div><div class="sktx">SQL, Mixpanel, Amplitude, Pendo, Tableau, Power BI & GA — KPI frameworks, funnel diagnostics & signal-to-noise analysis informing every decision.</div></div>
+      <div class="skc"><div class="skno">02</div><div class="skico">🔬</div><div class="sknm">Experimentation</div><div class="sktx">Hypothesis-driven A/B testing, feature flagging & growth loop design. Built engines that increased test velocity 3× and feature validation success 24%.</div></div>
+      <div class="skc"><div class="skno">03</div><div class="skico">🎯</div><div class="sknm">Discovery & Personalisation</div><div class="sktx">Owned ranking, relevance & semantic search. Discovery success 70%→81%, zero-result searches −18%, query match accuracy +23%.</div></div>
+      <div class="skc"><div class="skno">04</div><div class="skico">🚀</div><div class="sknm">Growth & Lifecycle</div><div class="sktx">End-to-end funnel ownership — acquisition → activation → retention → monetisation. +26% activation-to-purchase, +19% Revenue per Active User.</div></div>
+      <div class="skc"><div class="skno">05</div><div class="skico">🤝</div><div class="sknm">Cross-Functional Leadership</div><div class="sktx">Led 5+ teams across US, Europe & India — aligning engineering, data science, design, marketing & business around shared outcomes.</div></div>
+      <div class="skc"><div class="skno">06</div><div class="skico">🧠</div><div class="sknm">Technical Fluency</div><div class="sktx">API integration mapping, system architecture, data models, HTML/CSS/JS basics, ML & recommendation system scoping, GenAI use-case design.</div></div>
+    </div>
+  </section>
+
+  <div class="div-line"><span>✦</span></div>
+
+  <!-- Experience -->
+  <section class="sec alt">
+    <div class="sh">
+      <div class="ey">Professional Journey</div>
+      <h2 class="st">6 years at <em>Nerd Square</em></h2>
+    </div>
+    <div>
+      <div class="expr">
+        <div>
+          <div class="ep">Aug 2024 — Present</div>
+          <div class="eco">Nerd Square Digital Solutions</div>
+          <div class="ebadge">Current</div>
+        </div>
+        <div>
+          <div class="erl">Senior Product Manager</div>
+          <ul class="ebul">
+            <li>Defined discovery health North Star metric & governance model — platform-wide discovery success <b>70% → 81%</b> while sustaining &gt;95% index freshness.</li>
+            <li>Shaped behavioural-signal personalisation strategy — <b>AOV +34%</b> & expanded multi-product adoption across key segments.</li>
+            <li>Diagnosed decision friction via VoC synthesis — query reformulation <b>−18%</b>, confident product selection improved within 3 quarters.</li>
+            <li>Balanced relevance & monetisation through ranking guardrails — sponsored share <b>4% → 5.5%</b> with sustained marketplace quality.</li>
+            <li>Established hypothesis-driven experimentation framework — feature validation success rate <b>+24%</b>, decision velocity accelerated.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="expr">
+        <div>
+          <div class="ep">Apr 2022 — Jul 2024</div>
+          <div class="eco">Nerd Square Digital Solutions</div>
+        </div>
+        <div>
+          <div class="erl">Product Manager</div>
+          <ul class="ebul">
+            <li>Optimised ranking policies — <b>long-tail exposure +31%</b> while maintaining stable conversion quality.</li>
+            <li>Advanced semantic discovery to resolve ambiguous intent & zero-result journeys — query match accuracy <b>+23%</b>.</li>
+            <li>Funnel analysis & signal-to-noise diagnostics — recall <b>+21%</b>, high-intent abandonment <b>−15%</b>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="expr">
+        <div>
+          <div class="ep">Mar 2019 — Mar 2022</div>
+          <div class="eco">Nerd Square Digital Solutions</div>
+        </div>
+        <div>
+          <div class="erl">Associate Product Manager</div>
+          <ul class="ebul">
+            <li>Sunsetted underperforming features & reallocated <b>15% of engineering capacity</b> toward growth initiatives.</li>
+            <li>Defined ERP modernisation user journeys — reconciliation effort <b>−20%</b>, improved operational data visibility.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <section class="sec">
+    <div class="sh">
+      <div class="ey">Stack & Credentials</div>
+      <h2 class="st">Tools, <em>certifications</em><br><span class="ot2">& education</span></h2>
+    </div>
+    <div class="tgr">
+      <div class="tc2"><div class="skico">⚙️</div><div class="sknm">Tools & Tech</div><div class="sktx">JIRA · Confluence · Mixpanel · Google Analytics · Tableau · Power BI · Amplitude · Pendo · SQL · HTML/CSS/JS · API integrations</div></div>
+      <div class="tc2"><div class="skico">🏆</div><div class="sknm">Certifications</div><div class="sktx">Six Sigma Black Belt · Agile Methodologies · Lean Process Optimisation · Kaizen</div></div>
+      <div class="tc2"><div class="skico">🎓</div><div class="sknm">Education</div><div class="sktx">PGDBA — Symbiosis International University, Pune<br><br>B.Com — Maharaja Ganga Singh University, Ganganagar<br><br>Languages: English · Hindi</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="fc">© 2026 Vivaswan Vrihaspati · Senior Product Manager</p>
+    <div class="fl2">
+      <a href="mailto:vv.vivaswan@gmail.com">Email</a>
+      <a onclick="go('contact')">Contact</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════ CASE STUDIES ══════════════════ -->
+<div id="page-case-studies" class="pg">
+  <div class="csh">
+    <div class="ey" style="margin-bottom:18px;">Work Showcase</div>
+    <h1 class="st">Case <em>Studies</em></h1>
+    <p style="font-size:15px;color:var(--muted);max-width:560px;margin-top:20px;line-height:1.88;">
+      Deep dives into product challenges I've tackled — from discovery platform strategy to lifecycle growth systems. Each study covers problem framing, hypothesis design, experimentation approach & measurable outcomes.
+    </p>
+  </div>
+
+  <div class="csgr">
+
+    <!-- ── Netflix Case Study ── -->
+    <a class="csc" href="https://v-product-foundry.github.io/Portfolio/Netflix%20Case%20Study" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+      <div>
+        <div class="cs-thumb">
+          <svg viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="ng1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#0a0a0a"/>
+                <stop offset="100%" style="stop-color:#1a0505"/>
+              </linearGradient>
+            </defs>
+            <rect width="480" height="160" fill="url(#ng1)"/>
+            <rect x="0" y="0" width="480" height="2" fill="#E50914" opacity="0.6"/>
+            <rect x="0" y="158" width="480" height="2" fill="#E50914" opacity="0.6"/>
+            <rect x="30" y="20" width="62" height="120" rx="4" fill="#1e1e1e"/>
+            <rect x="30" y="20" width="62" height="40" rx="4" fill="#E50914" opacity="0.85"/>
+            <rect x="104" y="20" width="62" height="120" rx="4" fill="#1e1e1e"/>
+            <rect x="104" y="55" width="62" height="40" rx="4" fill="#E50914" opacity="0.55"/>
+            <rect x="178" y="20" width="62" height="120" rx="4" fill="#1e1e1e"/>
+            <rect x="178" y="80" width="62" height="40" rx="4" fill="#E50914" opacity="0.35"/>
+            <ellipse cx="260" cy="80" rx="180" ry="70" fill="#E50914" opacity="0.06"/>
+            <text x="282" y="75" font-family="Arial Black,sans-serif" font-size="60" font-weight="900" fill="#E50914" opacity="0.15" letter-spacing="-2">N</text>
+            <rect x="282" y="102" width="150" height="1" fill="#E50914" opacity="0.4"/>
+            <text x="282" y="122" font-family="Arial,sans-serif" font-size="10" fill="#E50914" letter-spacing="3" opacity="0.9">PRODUCT STRATEGY</text>
+            <text x="282" y="140" font-family="Arial,sans-serif" font-size="10" fill="#888" letter-spacing="2">ENGAGEMENT · GROWTH</text>
+          </svg>
+        </div>
+        <div class="csn">01</div>
+        <span class="cstag">Product Strategy</span>
+        <div class="csnm">Netflix — Driving User Growth & Engagement</div>
+        <div class="csbl">A product strategy case study for scaling Netflix to 500M+ subscribers — covering AI-powered discovery, creator-led acquisition via Shorts, AVOD tier design, and personalisation.</div>
+      </div>
+      <div class="csft">
+        <span class="cskpi">Engagement · AI Discovery · Growth</span>
+        <span class="csar">↗</span>
+      </div>
+    </a>
+
+    <!-- ── Homerun Case Study ── -->
+    <a class="csc" href="https://v-product-foundry.github.io/Portfolio/Homerun%20Case%20Study" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+      <div>
+        <div class="cs-thumb">
+          <svg viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#0d1f35"/>
+                <stop offset="100%" style="stop-color:#1a2e44"/>
+              </linearGradient>
+            </defs>
+            <rect width="480" height="160" fill="url(#hg1)"/>
+            <!-- grid lines -->
+            <line x1="0" y1="40" x2="480" y2="40" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="0" y1="80" x2="480" y2="80" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="0" y1="120" x2="480" y2="120" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <line x1="160" y1="0" x2="160" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <line x1="320" y1="0" x2="320" y2="160" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <!-- Room-first nav: 3 room tiles -->
+            <rect x="18" y="28" width="54" height="40" rx="3" fill="rgba(224,92,42,0.18)" stroke="#e05c2a" stroke-width="1" opacity="0.9"/>
+            <text x="45" y="52" font-family="Arial,sans-serif" font-size="8" fill="#e05c2a" text-anchor="middle" letter-spacing="1">KITCHEN</text>
+            <rect x="80" y="28" width="54" height="40" rx="3" fill="rgba(224,92,42,0.1)" stroke="#e05c2a" stroke-width="1" opacity="0.6"/>
+            <text x="107" y="52" font-family="Arial,sans-serif" font-size="8" fill="#e05c2a" text-anchor="middle" letter-spacing="1">BEDROOM</text>
+            <rect x="142" y="28" width="54" height="40" rx="3" fill="rgba(224,92,42,0.06)" stroke="#e05c2a" stroke-width="1" opacity="0.4"/>
+            <text x="169" y="52" font-family="Arial,sans-serif" font-size="8" fill="#e05c2a" text-anchor="middle" letter-spacing="1">LIVING</text>
+            <!-- Weight limit fix: split order visual -->
+            <rect x="18" y="82" width="178" height="28" rx="3" fill="rgba(224,92,42,0.08)" stroke="#e05c2a" stroke-width="1" opacity="0.7"/>
+            <rect x="18" y="82" width="86" height="28" rx="3" fill="rgba(224,92,42,0.25)" stroke-width="0"/>
+            <text x="61" y="100" font-family="Arial,sans-serif" font-size="8" fill="#e05c2a" text-anchor="middle" letter-spacing="1">ORDER 1</text>
+            <text x="152" y="100" font-family="Arial,sans-serif" font-size="8" fill="#e05c2a" text-anchor="middle" letter-spacing="1">ORDER 2</text>
+            <text x="20" y="126" font-family="Arial,sans-serif" font-size="7.5" fill="rgba(224,92,42,0.55)" letter-spacing="1">AUTO-SPLIT · 1500 KG LIMIT FIX</text>
+            <!-- PDP estimator + milestone bars (right side) -->
+            <rect x="230" y="20" width="100" height="10" rx="2" fill="#e05c2a" opacity="0.7"/>
+            <rect x="230" y="36" width="76" height="10" rx="2" fill="#e05c2a" opacity="0.52"/>
+            <rect x="230" y="52" width="55" height="10" rx="2" fill="#e05c2a" opacity="0.36"/>
+            <rect x="230" y="68" width="36" height="10" rx="2" fill="#e05c2a" opacity="0.22"/>
+            <text x="340" y="29" font-family="Arial,sans-serif" font-size="7.5" fill="#e05c2a" opacity="0.8" letter-spacing="1">DISCOVER</text>
+            <text x="340" y="45" font-family="Arial,sans-serif" font-size="7.5" fill="#e05c2a" opacity="0.65" letter-spacing="1">ESTIMATE</text>
+            <text x="340" y="61" font-family="Arial,sans-serif" font-size="7.5" fill="#e05c2a" opacity="0.5" letter-spacing="1">CHECKOUT</text>
+            <text x="340" y="77" font-family="Arial,sans-serif" font-size="7.5" fill="#e05c2a" opacity="0.35" letter-spacing="1">RETAIN</text>
+            <!-- Milestone nudge arc -->
+            <path d="M 240 120 Q 290 90 340 120" fill="none" stroke="#e05c2a" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+            <circle cx="240" cy="120" r="4" fill="#e05c2a" opacity="0.6"/>
+            <circle cx="290" cy="103" r="3" fill="#e05c2a" opacity="0.4"/>
+            <circle cx="340" cy="120" r="4" fill="#e05c2a" opacity="0.6"/>
+            <text x="270" y="140" font-family="Arial,sans-serif" font-size="7.5" fill="#e05c2a" opacity="0.55" letter-spacing="1">MILESTONE NUDGE ENGINE</text>
+            <!-- Label -->
+            <rect x="390" y="100" width="74" height="1" fill="#e05c2a" opacity="0.35"/>
+            <text x="390" y="116" font-family="Arial,sans-serif" font-size="9" fill="#e05c2a" letter-spacing="2" opacity="0.85">UX STRATEGY</text>
+            <text x="390" y="132" font-family="Arial,sans-serif" font-size="9" fill="#8899aa" letter-spacing="1.5">B2B · GROWTH</text>
+          </svg>
+        </div>
+        <div class="csn">02</div>
+        <span class="cstag">UX Strategy & Growth</span>
+        <div class="csnm">Homerun — B2B Construction E-Commerce</div>
+        <div class="csbl">Diagnosed critical UX failures across a B2B materials platform — fixing a weight-limit checkout dead-end, introducing room-first discovery, a cost estimator, and a milestone retention engine for contractors.</div>
+      </div>
+      <div class="csft">
+        <span class="cskpi">Checkout · Retention · Discovery</span>
+        <span class="csar">↗</span>
+      </div>
+    </a>
+
+    <!-- ── Coming Soon 03 ── -->
+    <div class="csc dim">
+      <div>
+        <div class="csn">03</div>
+        <span class="cstag">Growth & Lifecycle</span>
+        <div class="csnm">Case Study Coming Soon</div>
+        <div class="csbl">Activation funnel design, cohort analysis & product-led growth outcomes. Publishing shortly.</div>
+      </div>
+      <div class="csft"><span class="cskpi">— Coming Soon</span></div>
+    </div>
+
+    <!-- ── Coming Soon 04 ── -->
+    <div class="csc dim">
+      <div>
+        <div class="csn">04</div>
+        <span class="cstag">Experimentation</span>
+        <div class="csnm">Case Study Coming Soon</div>
+        <div class="csbl">Hypothesis-driven experimentation frameworks — test design to 3× decision velocity. Publishing shortly.</div>
+      </div>
+      <div class="csft"><span class="cskpi">— Coming Soon</span></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p class="fc">© 2026 Vivaswan Vrihaspati · Senior Product Manager</p>
+    <div class="fl2"><a onclick="go('home')">Home</a><a onclick="go('contact')">Contact</a></div>
+  </footer>
+</div>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<div id="page-contact" class="pg">
+  <div class="cw">
+    <div class="cl">
+      <div class="ey">Let's connect</div>
+      <h2 style="font-family:var(--disp);font-size:clamp(36px,4vw,54px);font-weight:700;line-height:1.1;margin-top:14px;">
+        Open to <em style="font-style:italic;color:var(--gold);">great</em><br>conversations
+      </h2>
+      <p style="font-size:14px;color:var(--muted);margin-top:14px;line-height:1.88;max-width:340px;">
+        PM role, collaboration, advisory chat or a deep dive on discovery & personalisation systems — I'd love to hear from you.
+      </p>
+      <div class="cdet">
+        <div><div class="cdl">Email</div><div class="cdv"><a href="mailto:vv.vivaswan@gmail.com">vv.vivaswan@gmail.com</a></div></div>
+        <div><div class="cdl">Location</div><div class="cdv">India · Open to global opportunities</div></div>
+        <div><div class="cdl">Specialises in</div><div class="cdv">Discovery · Personalisation · Growth · E-commerce</div></div>
+      </div>
+      <div class="avail">
+        <span class="adot"></span>
+        <span class="at">Open to Product Manager & Senior PM opportunities</span>
+      </div>
+    </div>
+
+    <div class="cr">
+      <h2 class="fh">Send a <em>message</em></h2>
+      <p class="fs">Fill in your details and I'll get back within 24 hours.</p>
+
+      <!-- Success banner -->
+      <div id="form-success" style="display:none;margin-bottom:20px;padding:18px 22px;background:rgba(22,117,108,.09);border:1px solid rgba(22,117,108,.25);color:#16756C;font-size:14px;font-weight:500;">
+        ✓ Message received — I'll get back to you within 24 hours!
+      </div>
+      <!-- Error banner -->
+      <div id="form-error" style="display:none;margin-bottom:20px;padding:18px 22px;background:rgba(184,76,24,.08);border:1px solid rgba(184,76,24,.22);color:#B84C18;font-size:14px;">
+        Something went wrong — please try again or email me at vv.vivaswan@gmail.com
+      </div>
+
+      <form id="contact-form">
+        <div class="fr2">
+          <div class="fg">
+            <label class="fl" for="fn">First Name *</label>
+            <input type="text" id="fn" name="first_name" class="fi" placeholder="Jane" required/>
+          </div>
+          <div class="fg">
+            <label class="fl" for="ln">Last Name</label>
+            <input type="text" id="ln" name="last_name" class="fi" placeholder="Smith"/>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl" for="em">Email Address *</label>
+          <input type="email" id="em" name="email" class="fi" placeholder="jane@company.com" required/>
+        </div>
+        <div class="fg">
+          <label class="fl" for="co">Company / Organisation</label>
+          <input type="text" id="co" name="company" class="fi" placeholder="Your company (optional)"/>
+        </div>
+        <div class="fg">
+          <label class="fl" for="su">Subject *</label>
+          <input type="text" id="su" name="subject" class="fi" placeholder="e.g. PM role, collaboration, advisory..." required/>
+        </div>
+        <div class="fg">
+          <label class="fl" for="ms">Message *</label>
+          <textarea id="ms" name="message" class="ft" placeholder="Tell me what you're working on or what you'd like to discuss..." required></textarea>
+        </div>
+        <button type="submit" id="form-btn" class="fsb">Send Message →</button>
+        <p class="fnote">Your details are only used to respond to you.</p>
+      </form>
+
+      <script>
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const btn = document.getElementById('form-btn');
+          const successEl = document.getElementById('form-success');
+          const errorEl = document.getElementById('form-error');
+
+          // Reset banners
+          successEl.style.display = 'none';
+          errorEl.style.display = 'none';
+
+          // Loading state
+          btn.textContent = 'Sending…';
+          btn.disabled = true;
+          btn.style.opacity = '0.7';
+
+          const data = {
+            first_name: document.getElementById('fn').value,
+            last_name:  document.getElementById('ln').value,
+            email:      document.getElementById('em').value,
+            company:    document.getElementById('co').value,
+            subject:    document.getElementById('su').value,
+            message:    document.getElementById('ms').value
+          };
+
+          try {
+            const res = await fetch('https://formspree.io/f/xykowzgo', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(data)
+            });
+
+            const json = await res.json();
+            if (res.ok && !json.error) {
+              successEl.style.display = 'block';
+              this.reset();
+              btn.textContent = 'Sent ✓';
+            } else {
+              errorEl.style.display = 'block';
+              errorEl.textContent = (json && json.error) ? '⚠ ' + json.error : 'Something went wrong — please email vv.vivaswan@gmail.com directly.';
+              btn.textContent = 'Send Message →';
+              btn.disabled = false;
+              btn.style.opacity = '1';
+            }
+          } catch(err) {
+            errorEl.style.display = 'block';
+            btn.textContent = 'Send Message →';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          }
+        });
+      </script>
+    </div>
+  </div>
+
+  <footer>
+    <p class="fc">© 2026 Vivaswan Vrihaspati · Senior Product Manager</p>
+    <div class="fl2"><a onclick="go('home')">Home</a><a onclick="go('case-studies')">Case Studies</a></div>
+  </footer>
+</div>
+
+<script>
+/* Cursor */
+const cr=document.getElementById('cur'),cr2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{
+  cr.style.left=e.clientX+'px';cr.style.top=e.clientY+'px';
+  setTimeout(()=>{cr2.style.left=e.clientX+'px';cr2.style.top=e.clientY+'px';},65);
+});
+document.querySelectorAll('a,button,.csc,.skc,.sc,.tc2,.tc,.chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cr.style.width='15px';cr.style.height='15px';cr2.style.width='54px';cr2.style.height='54px';});
+  el.addEventListener('mouseleave',()=>{cr.style.width='9px';cr.style.height='9px';cr2.style.width='36px';cr2.style.height='36px';});
+});
+
+/* Nav scroll */
+window.addEventListener('scroll',()=>{document.getElementById('nv').classList.toggle('up',scrollY>20);});
+
+/* Navigation */
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.links a').forEach(a=>a.classList.remove('on'));
+  document.getElementById('page-'+id).classList.add('on');
+  document.getElementById('n-'+id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='home')setTimeout(counters,250);
+}
+
+/* Stat counters */
+function counters(){
+  document.querySelectorAll('.sn[data-to]').forEach(el=>{
+    const T=+el.dataset.to,sx=el.dataset.sx||'';
+    let v=0;const step=Math.ceil(T/38);el.textContent='0';
+    const iv=setInterval(()=>{v=Math.min(v+step,T);el.textContent=v+sx;if(v>=T)clearInterval(iv);},28);
+  });
+}
+setTimeout(counters,700);
+
+
+</script>
+</body>
+</html>
